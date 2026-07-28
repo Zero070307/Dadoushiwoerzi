@@ -1560,7 +1560,7 @@ function render() {
     }
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      if (!g.name.toLowerCase().includes(q) && !g.sub.toLowerCase().includes(q) && !g.desc.toLowerCase().includes(q) && !g.code.toLowerCase().includes(q)) {
+      if (!g.name.toLowerCase().includes(q) && !g.sub.toLowerCase().includes(q) && !g.desc.toLowerCase().includes(q)) {
         return false;
       }
     }
@@ -1686,7 +1686,7 @@ function goPage(page) {
       }
       if (searchQuery) {
         const q = searchQuery.toLowerCase();
-        if (!g.name.toLowerCase().includes(q) && !g.sub.toLowerCase().includes(q) && !g.desc.toLowerCase().includes(q) && !g.code.toLowerCase().includes(q)) return false;
+        if (!g.name.toLowerCase().includes(q) && !g.sub.toLowerCase().includes(q) && !g.desc.toLowerCase().includes(q)) return false;
       }
       return true;
     }).length
