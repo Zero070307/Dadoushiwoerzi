@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -558,6 +558,18 @@
   }
   .card-meta .edit-btn:hover { border-color: var(--accent); color: var(--accent); }
   .card-meta .del-btn:hover { border-color: var(--danger); color: var(--danger); }
+  .card-meta .fav-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    transition: all 0.15s;
+  }
+  .card-meta .fav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .card-meta .fav-btn.faved { color: var(--accent); border-color: rgba(240,185,11,0.3); background: rgba(240,185,11,0.08); }
 
   /* --- Empty State --- */
   .empty-state {
@@ -708,6 +720,7 @@
     <button class="tab active" data-tab="all"><span class="emoji">📋</span>全部</button>
     <button class="tab" data-tab="fenghuo"><span class="emoji">🔥</span>烽火地带</button>
     <button class="tab" data-tab="streamer"><span class="emoji">⭐</span>主播同款</button>
+    <button class="tab" data-tab="mine"><span class="emoji">💾</span>我的改枪码</button>
   </div>
 
   <!-- Controls Row 1: Search + Filters -->
@@ -844,460 +857,218 @@ function getPriceTier(cost) {
 
 // ─── Data ───
 const guns = [
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 突击步枪
-  // ═══════════════════════════════════════════
+
+  // ═══ 突击步枪 ═══
   { name: "AS Val", sub: "近战T0顶配 (S10)", code: "6JPHD780AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "瞬开镜稳压，高端局近战猛攻" },
   { name: "AS Val", sub: "常规满改", code: "6GTVU05049H3TLFOHMKH0", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "均衡配置，新手友好" },
-  { name: "AS Val", sub: "混合满改（机动拉满）", code: "6GTVUK8049H3TLFOHMKH0", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "机动性拉满，游走突袭" },
-  { name: "AS Val", sub: "MRGS托满改（稳如泰山）", code: "6GTVUT0049H3TLFOHMKH0", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "后坐控制极佳，持续压制" },
-  { name: "AS Val", sub: "S9猛攻版 (56W)", code: "6H51FIC0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "56万", desc: "满改激光，秒开镜" },
-  { name: "AS Val", sub: "S9猛攻版二", code: "6JT7PGC0D69M54S2KHIUU", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季猛攻配置" },
+  { name: "AS Val", sub: "混合满改", code: "6GTVUK8049H3TLFOHMKH0", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "机动性拉满" },
 
-  { name: "K416", sub: "半改均衡之选", code: "6IUQAR4081SNL6KO8PQSD", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "秒五级甲0.3秒，万金油" },
-  { name: "K416", sub: "S10性价比 (33W)", code: "6KA8KIS04IEPU59LBE3HQ", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "S10赛季高性价比半改" },
-  { name: "K416", sub: "S9满改版", code: "6JQ44580AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季满改配置" },
-  { name: "K416", sub: "45发满改无后座", code: "6H53U540E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "45发弹匣+无后座激光枪" },
-  { name: "K416", sub: "红点满改 (57W)", code: "6H5FOJ08FOTQMS6R8DC1B", category: "突击步枪", tab: "fenghuo", cost: "57万", desc: "红点高配满改" },
-  { name: "K416", sub: "三倍满改 (60W)", code: "6H5FOJ08FOTQMS6R8DC1B", category: "突击步枪", tab: "fenghuo", cost: "60万", desc: "三倍镜高配满改" },
+  { name: "K416", sub: "半改均衡 (32W)", code: "6IUQAR4081SNL6KO8PQSD", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "秒五级甲0.3秒，万金油" },
+  { name: "K416", sub: "S10性价比 (33W)", code: "6KA8KIS04IEPU59LBE3HQ", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "S10高性价比半改" },
+  { name: "K416", sub: "满改性价比 (39W)", code: "6FV0SVS0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "39万", desc: "39W性价比满改" },
 
   { name: "KC17", sub: "顶配满改 (S10)", code: "6KI9V9C0EU90O684D8QL5", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S10版本强势突击步枪" },
-  { name: "KC17", sub: "S9满改版", code: "6JQ4JV00AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季满改" },
-  { name: "KC17", sub: "S9 3倍满改", code: "6H51DO00E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "3倍镜满改配置" },
+  { name: "KC17", sub: "短管FFC顶配 (~55W)", code: "6KI9V3C0EU90O684D8QL5", category: "突击步枪", tab: "fenghuo", cost: "~55万", desc: "短管FFC制退器顶配" },
+  { name: "KC17", sub: "长管FFC倍镜版 (~60W)", code: "6KIA01C0EU90O684D8QL5", category: "突击步枪", tab: "fenghuo", cost: "~60万", desc: "长管+FFC+倍镜" },
+  { name: "KC17", sub: "长管密令沙暴版 (~60W)", code: "6KI9VQG0EU90O684D8QL5", category: "突击步枪", tab: "fenghuo", cost: "~60万", desc: "密令沙暴补偿器+倍镜" },
 
-  { name: "RM277", sub: "作战顶配 (S10新枪)", code: "6KFCU2K0C2C56U6BB8FNO", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "长弓高点架人专用" },
-  { name: "RM277", sub: "中远程高操控", code: "6KFM2MO0B0GKDDOTE9T6Q", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "中远程高操控性配置" },
+  { name: "RM277", sub: "作战顶配 (S10新枪)", code: "6KFCU2K0C2C56U6BB8FNO", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "长弓高点架人" },
+  { name: "RM277", sub: "中远程高操控", code: "6KFM2MO0B0GKDDOTE9T6Q", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "高操控性配置" },
+  { name: "RM277", sub: "金枪客上交版 (~17W)", code: "6KFCTUS0C2C56U6BB8FNO", category: "突击步枪", tab: "fenghuo", cost: "~17万", desc: "低成本达标" },
 
-  { name: "M4A1", sub: "丐版入门 (16W)", code: "6HAUEC40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "16万", desc: "最丐配置，新手过渡" },
-  { name: "M4A1", sub: "低配堆后坐力 (19W)", code: "6ILQHV8093H1HNC6QM36G", category: "突击步枪", tab: "fenghuo", cost: "19万", desc: "入门低配，堆后坐力控制" },
-  { name: "M4A1", sub: "红点无后座 (30W)", code: "6HAUEDC0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "红点镜+无后座配置" },
-  { name: "M4A1", sub: "红点中配版 (33W)", code: "6G1TNAK0DU4H1OH60MG1R", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "红点+中配均衡" },
+  { name: "M4A1", sub: "低配后坐力 (19W)", code: "6ILQHV8093H1HNC6QM36G", category: "突击步枪", tab: "fenghuo", cost: "19万", desc: "入门低配" },
   { name: "M4A1", sub: "中配均衡 (33W)", code: "6ILQVDG093H1HNC6QM36G", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "堡垒水平+三角握把" },
-  { name: "M4A1", sub: "1.5倍镜激光半改 (35W)", code: "6HAUEBC0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "1.5倍镜+激光，半改好选择" },
-  { name: "M4A1", sub: "高配满改 (46W)", code: "6ILQQ3G093H1HNC6QM36G", category: "突击步枪", tab: "fenghuo", cost: "46万", desc: "堡垒+密令握把，顶级配置" },
-  { name: "M4A1", sub: "满改红点 (48W)", code: "6HAUEAO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "满改红点，S9经典" },
-  { name: "M4A1", sub: "满改火控 (50W)", code: "6HAUECO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "50W满改火控" },
-  { name: "M4A1", sub: "满改48W版", code: "6H4NQ8C0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "S9赛季满改" },
+  { name: "M4A1", sub: "高配满改 (46W)", code: "6ILQQ3G093H1HNC6QM36G", category: "突击步枪", tab: "fenghuo", cost: "46万", desc: "堡垒+密令握把" },
+  { name: "M4A1", sub: "战场红点版", code: "6FC1NKK0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "全面战场红点" },
+  { name: "M4A1", sub: "战场倍镜版", code: "6FC1NT40C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "全面战场倍镜" },
 
-  { name: "AKM", sub: "青春版 (19W)", code: "6HAUE8040E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "19万", desc: "入门级AKM配置" },
-  { name: "AKM", sub: "18W无后座", code: "6H53UHO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "18万", desc: "18W便宜无后座" },
-  { name: "AKM", sub: "半改 (32W)", code: "6HAUE8K0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "中配半改" },
-  { name: "AKM", sub: "无后座中配版 (35W)", code: "6GJ2OSO08Q3HTONBI029R", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "无后座中配，激光枪手感" },
-  { name: "AKM", sub: "满改火控 (48W)", code: "6HAUE9C0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "满改火控顶配" },
+  { name: "AKM", sub: "18W无后座", code: "6H53UHO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "18万", desc: "便宜无后座" },
+  { name: "AKM", sub: "无后座中配 (35W)", code: "6GJ2OSO08Q3HTONBI029R", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "激光枪手感" },
+  { name: "AKM", sub: "满改性价比 (29W)", code: "6FV0MES0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "29万", desc: "29W性价比满改" },
+  { name: "AKM", sub: "战场职业同款", code: "6KIOL8K02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "世界赛职业同款" },
+  { name: "AKM", sub: "战场三枪带走", code: "6IL892K013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "上胸三枪一个" },
 
-  { name: "腾龙", sub: "青春版 (17W)", code: "6HAUEG40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "17万", desc: "丐版入门" },
-  { name: "腾龙", sub: "满改高速导气 (50W)", code: "6H4H3U80E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "S9赛季满改" },
-  { name: "腾龙", sub: "半改高速导气 (45W)", code: "6H51E2K0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "45万", desc: "45W半改高速导气" },
+  { name: "腾龙", sub: "战场无导气30发", code: "6IL87QG013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "容错率高" },
+  { name: "腾龙", sub: "战场消音版", code: "6GH2UEKOACJLENNDR871G", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "消音战场腾龙" },
 
-  { name: "AK-12", sub: "青春版 (17W)", code: "6HAUEM40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "17万", desc: "丐版入门配置" },
-  { name: "AK-12", sub: "满改腰射 (43W)", code: "6HAUEMO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "43万", desc: "腰射流满改" },
-  { name: "AK-12", sub: "满改火控 (54W)", code: "6HAUEN40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "54万", desc: "火控满改顶配" },
+  { name: "AK-12", sub: "战场中距压制", code: "6IL88AC013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "45发+三倍镜" },
   { name: "AK-12", sub: "超绝满改 (59W)", code: "6H51JSG0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "59万", desc: "S9超绝满改" },
 
-  { name: "K437", sub: "青春版 (26W)", code: "6HAUEJO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "26万", desc: "入门丐版" },
-  { name: "K437", sub: "半改 (42W)", code: "6HAUEK80E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "42万", desc: "中配半改" },
-  { name: "K437", sub: "高配无后座 (48W)", code: "6G02CLK04QRQQL6OOBF6G", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "高配无后座激光枪" },
-  { name: "K437", sub: "满改红点 (50W)", code: "6HAUEK40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "红点满改" },
-  { name: "K437", sub: "满改版40W", code: "6G8BKB40C94UI3U80V1NH", category: "突击步枪", tab: "fenghuo", cost: "40万", desc: "40W性价比满改" },
-  { name: "K437", sub: "满改火控 (60W)", code: "6HAUEK40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "60万", desc: "火控顶配满改" },
-
-  { name: "AUG", sub: "青春版 (19W)", code: "6HAUEL40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "19万", desc: "入门丐版" },
+  { name: "AUG", sub: "战场60发弹鼓", code: "6IL8TC8013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "60发弹鼓压制" },
   { name: "AUG", sub: "33W满改", code: "6H51SL80E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "性价比满改" },
-  { name: "AUG", sub: "半改 (38W)", code: "6HAUEM00E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "38万", desc: "中配半改" },
-  { name: "AUG", sub: "黑夜无后座消音版 (39W)", code: "6G0K9AC04QRQQL6OOBF6G", category: "突击步枪", tab: "fenghuo", cost: "39万", desc: "消音+无后座，黑夜战神" },
-  { name: "AUG", sub: "满改三倍 (50W)", code: "6HAUEM40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "三倍镜满改" },
+  { name: "AUG", sub: "黑夜无后座消音 (39W)", code: "6G0K9AC04QRQQL6OOBF6G", category: "突击步枪", tab: "fenghuo", cost: "39万", desc: "消音+无后座" },
 
-  { name: "SG552", sub: "丐版 (10W)", code: "6HAUEP00E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "10万", desc: "最丐入门枪" },
+  { name: "K437", sub: "高配无后座 (48W)", code: "6G02CLK04QRQQL6OOBF6G", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "高配无后座激光枪" },
+  { name: "K437", sub: "满改版 (40W)", code: "6G8BKB40C94UI3U80V1NH", category: "突击步枪", tab: "fenghuo", cost: "40万", desc: "40W性价比满改" },
+  { name: "K437", sub: "近战大改全能 (29W)", code: "6H737QG0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "29万", desc: "近战大改全能版" },
+
+  { name: "AR57", sub: "满改全面版", code: "6JQ48580AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9新晋T0" },
   { name: "SG552", sub: "满改版 (43W)", code: "6H4CSLG0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "43万", desc: "S9赛季满改" },
-
+  { name: "SG552", sub: "战场消音版", code: "6GL1JG80ACJLENNDR871G", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "消音战场" },
   { name: "MK47", sub: "稳版", code: "6JQ3P140AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "高稳定性版本" },
-  { name: "MK47", sub: "近点高伤版", code: "6JT7PMC0D69M54S2KHIUU", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "近点高伤害配置" },
+  { name: "MK47", sub: "战场版", code: "6JBKFP800SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场MK47" },
+  { name: "CAR-15", sub: "战场版", code: "6FC1LGS0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场CAR-15" },
+  { name: "PTR-32", sub: "战场30发版", code: "6JBKF4000SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "30发战场PTR-32" },
+  { name: "PTR-32", sub: "战场40发版", code: "6JBKFBG00SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "40发战场PTR-32" },
 
-  { name: "AR57", sub: "满改全面版 (S9新晋T0)", code: "6JQ48580AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9新晋T0，全面均衡" },
-
-  { name: "QBZ95-1", sub: "青春版 (18W)", code: "6HAUENO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "18万", desc: "丐版入门" },
-  { name: "QBZ95-1", sub: "30W满改三倍", code: "6H53UCO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "三倍镜满改性价比" },
-  { name: "QBZ95-1", sub: "满改 (37W)", code: "6HAUEO40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "37万", desc: "满改配置" },
-
-  { name: "MCX LT", sub: "丐版入门 (12W)", code: "6IV6SLG03GFRB8J9CH4VL", category: "突击步枪", tab: "fenghuo", cost: "12万", desc: "最丐MCX，普坝过渡" },
-  { name: "MCX LT", sub: "丐版 (14W)", code: "6ITSQUS085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "14万", desc: "配件极简，新手练枪首选" },
-  { name: "MCX LT", sub: "丐版通用码 (17W)", code: "6IVE4QS0AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "17万", desc: "丐版通用配置" },
+  // ═══ MCX LT ═══
+  { name: "MCX LT", sub: "丐版 (14W)", code: "6ITSQUS085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "14万", desc: "配件极简，新手练枪" },
+  { name: "MCX LT", sub: "丐版通用 (17W)", code: "6IVE4QS0AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "17万", desc: "丐版通用配置" },
   { name: "MCX LT", sub: "枪管半改 (20W)", code: "6IV6SPG03GFRB8J9CH4VL", category: "突击步枪", tab: "fenghuo", cost: "20万", desc: "20W枪管半改" },
   { name: "MCX LT", sub: "腰射版 (21W)", code: "6IVOOCC074EP52HKUGIIC", category: "突击步枪", tab: "fenghuo", cost: "21万", desc: "21W腰射入门" },
-  { name: "MCX LT", sub: "丐版 (22W)", code: "6J136VK085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "22万", desc: "22W丐版配置" },
-  { name: "MCX LT", sub: "性价比版 (23W)", code: "6IVOV080ADPIIA9D8B1Q8", category: "突击步枪", tab: "fenghuo", cost: "23万", desc: "23W高性价比" },
   { name: "MCX LT", sub: "性价比版 (24W)", code: "6J135G0085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "24万", desc: "后座67，平民首选" },
   { name: "MCX LT", sub: "半改 (26W)", code: "6IUL67O0AJRE0ID6PL8GU", category: "突击步枪", tab: "fenghuo", cost: "26万", desc: "26W半改均衡" },
-  { name: "MCX LT", sub: "高伤害版 (26W)", code: "6IVOPP4074EP52HKUGIIC", category: "突击步枪", tab: "fenghuo", cost: "26万", desc: "26W高伤害配置" },
   { name: "MCX LT", sub: "灵活半改 (29W)", code: "6J05KQ005626H7V45IC7J", category: "突击步枪", tab: "fenghuo", cost: "29万", desc: "操控92，开镜极快" },
+  { name: "MCX LT", sub: "半改通用 (30W)", code: "6IVE83K0AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改通用配置" },
   { name: "MCX LT", sub: "极致性价比 (30W)", code: "6JCLU4005MEBDRSRO17QC", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "30W极致性价比" },
-  { name: "MCX LT", sub: "半改通用码 (30W)", code: "6IVE83K0AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改通用配置" },
-  { name: "MCX LT", sub: "双修版 (31W)", code: "6JCLF5O0046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "31万", desc: "31W腰射操控双修" },
+  { name: "MCX LT", sub: "双修版 (31W)", code: "6JCLF5O0046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "31万", desc: "腰射操控双修" },
   { name: "MCX LT", sub: "大弹夹版 (32W)", code: "6JCLVEG05MEBDRSRO17QC", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "32W大弹夹" },
   { name: "MCX LT", sub: "半改 (33W)", code: "6J137C0085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "后座79，射程39m" },
   { name: "MCX LT", sub: "青春版 (35W)", code: "6JCL6VO0046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "35W小满改，射速870" },
   { name: "MCX LT", sub: "小满改 (39W)", code: "6JCL9740046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "39万", desc: "39W满改，后座78" },
   { name: "MCX LT", sub: "满改 (41W)", code: "6JCM13S05MEBDRSRO17QC", category: "突击步枪", tab: "fenghuo", cost: "41万", desc: "41W满改配置" },
-  { name: "MCX LT", sub: "大满改 (42W)", code: "6IV6SS003GFRB8J9CH4VL", category: "突击步枪", tab: "fenghuo", cost: "42万", desc: "42W大满改" },
-  { name: "MCX LT", sub: "满改 (44W)", code: "6JCLER80046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "44万", desc: "60发弹匣+后座78+射速870" },
+  { name: "MCX LT", sub: "满改 (44W)", code: "6JCLER80046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "44万", desc: "60发弹匣+后座78" },
   { name: "MCX LT", sub: "满改 (47W)", code: "6IUL64G0AJRE0ID6PL8GU", category: "突击步枪", tab: "fenghuo", cost: "47万", desc: "47W满改顶配" },
-  { name: "MCX LT", sub: "满改通用码 (48W)", code: "6IVEA280AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "满改通用配置" },
-  { name: "MCX LT", sub: "满改 (50W)", code: "6KBGNOS0DVV2IQEKG70I3", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "焰魂枪管+隔热外套，30m内激光" },
-  { name: "MCX LT", sub: "林树同款 (52W)⭐", code: "6J137P0085N96GKA2CU5U", category: "突击步枪", tab: "streamer", cost: "52万", desc: "🔥 林树同款！爆头68，60发弹匣" },
+  { name: "MCX LT", sub: "满改通用 (48W)", code: "6IVEA280AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "满改通用" },
+  { name: "MCX LT", sub: "满改 (50W)", code: "6KBGNOS0DVV2IQEKG70I3", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "焰魂枪管+隔热外套" },
   { name: "MCX LT", sub: "满改二倍镜 (53W)", code: "6IVOSN80ADPIIA9D8B1Q8", category: "突击步枪", tab: "fenghuo", cost: "53万", desc: "53W满改二倍镜" },
   { name: "MCX LT", sub: "腰倍双修 (55W)", code: "6IVOS2G0ADPIIA9D8B1Q8", category: "突击步枪", tab: "fenghuo", cost: "55万", desc: "55W腰射+倍镜双修" },
-  { name: "MCX LT", sub: "激光版", code: "6IVE97S0AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "激光精准版" },
-  { name: "MCX LT", sub: "金枪客任务版", code: "6IVOP0G074EP52HKUGIIC", category: "突击步枪", tab: "gold", cost: "满改", desc: "MCX金枪客五任务专用" },
-
-  // ═══════════════════════════════════════════
-  // 📡 MCX LT — 全面战场系列
-  // ═══════════════════════════════════════════
-  { name: "MCX LT", sub: "战场长管操控版", code: "6J0F6240FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "中近距长管操控" },
-  { name: "MCX LT", sub: "战场长管稳定版", code: "6J0F7G00FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "百米稳定长管" },
-  { name: "MCX LT", sub: "战场长管收割版", code: "6J0F8R00FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "长管收割配置" },
-  { name: "MCX LT", sub: "战场短管冲锋版", code: "6J0FF6C0FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "短管冲锋枪手感" },
-  { name: "MCX LT", sub: "战场30发正常射速", code: "6JA8ETS0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "正常射速30发" },
-  { name: "MCX LT", sub: "战场45发正常射速", code: "6JA8F9G0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "正常射速45发" },
-  { name: "MCX LT", sub: "战场60发正常射速", code: "6JA8FDC0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "正常射速60发" },
+  { name: "MCX LT", sub: "战场长管操控版", code: "6J0F6240FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "中近距长管" },
+  { name: "MCX LT", sub: "战场长管稳定版", code: "6J0F7G00FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "百米稳定" },
+  { name: "MCX LT", sub: "战场短管冲锋版", code: "6J0FF6C0FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "短管冲锋手感" },
+  { name: "MCX LT", sub: "战场30发版", code: "6JA8ETS0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场30发" },
+  { name: "MCX LT", sub: "战场45发版", code: "6JA8F9G0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场45发" },
+  { name: "MCX LT", sub: "战场60发版", code: "6JA8FDC0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场60发" },
   { name: "MCX LT", sub: "战场45发高射速", code: "6JA8FG80F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "高射速45发" },
   { name: "MCX LT", sub: "战场60发高射速", code: "6JA8FL00F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "高射速60发" },
 
-  { name: "CAR-15", sub: "青春版 (9W)", code: "6HAUJD40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "9万", desc: "最便宜入门选择" },
-
-  { name: "M16A4", sub: "青春版 (20W)", code: "6HAUJFC0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "20万", desc: "入门丐版" },
-  { name: "M16A4", sub: "腰射版 (32W)", code: "6HAUJG80E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "腰射流配置" },
-  { name: "M16A4", sub: "三倍镜版 (36W)", code: "6HAUJG40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "36万", desc: "三倍镜中距" },
-
-  { name: "PTR-32", sub: "青春版 (9W)", code: "6HAUJ4S0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "9万", desc: "丐版入门" },
-  { name: "PTR-32", sub: "半改 (27W)", code: "6HAUJ5G0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "27万", desc: "中配半改" },
-  { name: "PTR-32", sub: "满改 (45W)", code: "6HAUJ5C0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "45万", desc: "满改配置" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 战斗步枪
-  // ═══════════════════════════════════════════
-  { name: "M7", sub: "全距T0全能版 (S10)", code: "6JQJDAK0BAC7RIM3B0293", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "FFC双流制退器+堤风长枪管+CT枪托+3倍可调镜" },
-  { name: "M7", sub: "消音隐身版", code: "6JQJDMS0BAC7RIM3B0293", category: "战斗步枪", tab: "fenghuo", cost: "满配", desc: "专属消音器+轻量化枪托，老六蹲点" },
-  { name: "M7", sub: "近战速攻红点版", code: "6H52M5K0FOTQMS6R8DC1B", category: "战斗步枪", tab: "fenghuo", cost: "满配", desc: "沙暴补偿器+UR短托+红点，25米贴脸" },
-  { name: "M7", sub: "丐版写版 (22W)", code: "6FR888K04QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "22万", desc: "丐版入门，体验M7手感" },
-  { name: "M7", sub: "中配版 (39W)", code: "6FR88A804QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "39万", desc: "中配均衡性价比" },
+  // ═══ 战斗步枪 ═══
+  { name: "M7", sub: "全距T0全能版 (S10)", code: "6JQJDAK0BAC7RIM3B0293", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "堤风长管+CT枪托+3倍可调镜" },
+  { name: "M7", sub: "消音隐身版", code: "6JQJDMS0BAC7RIM3B0293", category: "战斗步枪", tab: "fenghuo", cost: "满配", desc: "消音器+轻量化枪托" },
+  { name: "M7", sub: "近战速攻红点版", code: "6H52M5K0FOTQMS6R8DC1B", category: "战斗步枪", tab: "fenghuo", cost: "满配", desc: "沙暴补偿器+UR短托+红点" },
+  { name: "M7", sub: "丐版入门 (22W)", code: "6FR888K04QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "22万", desc: "丐版入门" },
+  { name: "M7", sub: "中配版 (39W)", code: "6FR88A804QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "39万", desc: "中配均衡" },
   { name: "M7", sub: "极致稳定版 (58W)", code: "6FR88C004QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "58万", desc: "极致稳定激光枪" },
   { name: "M7", sub: "火控版 (61W)", code: "6FR88B404QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "61万", desc: "火控顶配" },
-  { name: "M7", sub: "S9全距最优版", code: "6JPHJ700AO21USGQ8AC2S", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季中远最优" },
-  { name: "M7", sub: "满改红点版", code: "6H5LNCG0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "红点满改M7" },
   { name: "M7", sub: "59W二倍镜", code: "6H5DUD80E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "59万", desc: "二倍镜高配" },
-  { name: "M7", sub: "全能双流CT满配", code: "6JQJDAK0BAC7RIM3B0293", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "FFC双流制退器+堤风长管+CT特种枪托+3倍可调镜" },
+  { name: "M7", sub: "战场屏息稳压", code: "6IL89B4013CE082VBOHIS", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "屏息后座极低" },
+  { name: "M7", sub: "战场不屏息版", code: "6IL8A7O013CE082VBOHIS", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "不屏息好手感" },
+  { name: "M7", sub: "半改极限版 (48W)", code: "6FV7Q2K0B12QASUQB4J4K", category: "战斗步枪", tab: "fenghuo", cost: "48万", desc: "48W半改极限" },
 
-  { name: "SCAR-H", sub: "丐版 (16W)", code: "6HAMQ6S0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "16万", desc: "入门丐版配置" },
-  { name: "SCAR-H", sub: "半改激光枪 (28W)", code: "6HAMQ5O0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "28万", desc: "半改激光枪手感" },
-  { name: "SCAR-H", sub: "红点无敌稳定 (35W)", code: "6HAMQ2O0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "35万", desc: "红点无敌稳定，性价比高" },
-  { name: "SCAR-H", sub: "均衡三倍镜 (46W)", code: "6HAMQ3C0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "46万", desc: "三倍镜均衡配置" },
+  { name: "SCAR-H", sub: "战场红点版", code: "6FC1J2G0C78LK1MQ84RUR", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "全面战场红点" },
+  { name: "SCAR-H", sub: "战场倍镜版", code: "6FC1JRO0C78LK1MQ84RUR", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "全面战场倍镜" },
   { name: "SCAR-H", sub: "满改猛攻流 (50W)", code: "6HAMQ3K0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "50万", desc: "猛攻流满改" },
-  { name: "SCAR-H", sub: "满改红点+消音 (55W)", code: "6HAMQ480E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "55万", desc: "红点镜+消音，高配" },
+  { name: "SCAR-H", sub: "满改性价比 (35W)", code: "6FV7P1S0B12QASUQB4J4K", category: "战斗步枪", tab: "fenghuo", cost: "35万", desc: "35W性价比满改" },
 
-  { name: "G3", sub: "穷哥福利满改 (37W)", code: "6JANNO80AO21USGQ8AC2S", category: "战斗步枪", tab: "fenghuo", cost: "37万", desc: "两枪秒头，性价比极高" },
+  { name: "G3", sub: "穷哥满改 (37W)", code: "6JANNO80AO21USGQ8AC2S", category: "战斗步枪", tab: "fenghuo", cost: "37万", desc: "两枪秒头" },
   { name: "G3", sub: "21W大弹鼓", code: "6H51FNO0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "21万", desc: "大弹鼓经济版" },
+  { name: "G3", sub: "杨齐家丐版 (22W)", code: "6GI1TIS0D06PJ9BGGJFPR", category: "战斗步枪", tab: "fenghuo", cost: "22万", desc: "杨齐家同款丐版" },
 
-  { name: "ASh-12", sub: "满改腰射 (41W)", code: "6HAUJ0C0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "41万", desc: "腰射流满改" },
-  { name: "ASh-12", sub: "满改红点 (52W)", code: "6HAUJ0O0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "52万", desc: "红点满改" },
-  { name: "ASh-12", sub: "满改二倍 (52W)", code: "6HAUJ0S0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "52万", desc: "二倍镜满改" },
-  { name: "ASh-12", sub: "高配猛攻版 (57W)", code: "6GENQT404QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "57万", desc: "猛攻流高配" },
-  { name: "ASh-12", sub: "满改版 (60W)", code: "6H51JOG0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "60万", desc: "S9满改60W" },
+  { name: "ASh-12", sub: "高配猛攻 (57W)", code: "6GENQT404QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "57万", desc: "猛攻流高配" },
+  { name: "ASh-12", sub: "满改版 (60W)", code: "6H51JOG0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "60万", desc: "S9满改" },
+  { name: "ASh-12", sub: "近战贴脸版", code: "6KFCUF00C2C56U6BB8FNO", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "S10金枪客近战" },
 
-  { name: "AKS-74U", sub: "青春版 (9W)", code: "6HAUJ9G0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "9万", desc: "最丐选择" },
+  // ═══ 冲锋枪 ═══
+  { name: "SMG-45", sub: "新手攻楼 (12W)", code: "6JBTJ38085N96GKA2CU5U", category: "冲锋枪", tab: "fenghuo", cost: "12万", desc: "三枪碎五级甲" },
+  { name: "SMG-45", sub: "战场腰射100", code: "6FC1Q900C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "100腰射战场" },
 
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 冲锋枪
-  // ═══════════════════════════════════════════
-  { name: "SMG-45", sub: "新手近战攻楼 (12W)", code: "6JBTJ38085N96GKA2CU5U", category: "冲锋枪", tab: "fenghuo", cost: "12万", desc: "三枪碎五级甲，成型便宜" },
-  { name: "SMG-45", sub: "S10性价比", code: "6KJEJ1K0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
-  { name: "SMG-45", sub: "满改三倍 (43W)", code: "6HAUJ2C0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "43万", desc: "三倍镜满改" },
-  { name: "SMG-45", sub: "30W腰射满改", code: "6H53VCS0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "30万", desc: "腰射流满改" },
+  { name: "MP5", sub: "战场冲脸救人", code: "6IL8BQK013CE082VBOHIS", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "50发弹匣" },
+  { name: "MP5", sub: "满改腰射 (16W)", code: "6HQFJ580BSCDR38JE15T7", category: "冲锋枪", tab: "fenghuo", cost: "16万", desc: "腰射拉满大弹鼓" },
 
-  { name: "MP5", sub: "青春版腰射 (9W)", code: "6HAUJA80E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "9万", desc: "丐版腰射入门" },
-  { name: "MP5", sub: "满改腰射 (16W)", code: "6HAUJAC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "16万", desc: "满改腰射性价比" },
-  { name: "MP5", sub: "S10性价比", code: "6KJF9RC0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
-  { name: "MP5", sub: "35W三爆闪", code: "6H5LR980E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "35万", desc: "三爆闪配置" },
+  { name: "MP7", sub: "32W近战冲锋", code: "6FV0IMO0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "32万", desc: "近战高性价比" },
+  { name: "MP7", sub: "半改全能版 (29W)", code: "6H7378K0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "29万", desc: "半改全能" },
+  { name: "MP7", sub: "战场满改", code: "6EIAOLG02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场MP7" },
 
-  { name: "MP7", sub: "S10性价比", code: "6FV0IMO0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "32万", desc: "近战冲锋高性价比" },
-  { name: "MP7", sub: "青春版腰射 (24W)", code: "6HAUJ5S0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "24万", desc: "腰射入门" },
-  { name: "MP7", sub: "全能版 (50W)", code: "6HAUJ740E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "50万", desc: "全能配置" },
-  { name: "MP7", sub: "满改腰射 (61W)", code: "6HAUJ740E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "61万", desc: "腰射顶配" },
-  { name: "MP7", sub: "满改开镜 (63W)", code: "6HAUJ780E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "63万", desc: "开镜流顶配" },
-  { name: "MP7", sub: "S9腰射满改", code: "6JQ5VBS0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "满改", desc: "S9赛季腰射满改" },
-  { name: "MP7", sub: "50W满改", code: "6H53V040E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "50万", desc: "S9赛季满改" },
+  { name: "P90", sub: "近战猛攻 (24W)", code: "6FQUIM404QRQQL600BF6G", category: "冲锋枪", tab: "fenghuo", cost: "24万", desc: "近战猛攻利器" },
+  { name: "P90", sub: "大改破点版 (28W)", code: "6H734BG0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "28万", desc: "大改破点流" },
 
-  { name: "P90", sub: "青春版 (16W)", code: "6HAUJBO0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "16万", desc: "丐版入门" },
-  { name: "P90", sub: "性价比带腰射 (18W)", code: "6HAUNLC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "18万", desc: "18W性价比腰射" },
-  { name: "P90", sub: "近战猛攻版 (24W)", code: "6FQUIM404QRQQL600BF6G", category: "冲锋枪", tab: "fenghuo", cost: "24万", desc: "近战猛攻利器" },
-  { name: "P90", sub: "S10性价比", code: "6KJF8N40AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
-  { name: "P90", sub: "满改 (42W)", code: "6HAUJC40E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "42万", desc: "满改配置" },
-  { name: "P90", sub: "满改+消音 (45W)", code: "6HAUNM80E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "45万", desc: "满改消音版" },
+  { name: "Vector", sub: "腰射中配 (29W)", code: "6GOFEC8032SF8AON69MFA", category: "冲锋枪", tab: "fenghuo", cost: "29万", desc: "腰射中配" },
+  { name: "Vector", sub: "大改全能版 (36W)", code: "6H7375G0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "36万", desc: "大改全能" },
+  { name: "Vector", sub: "战场可腰射", code: "6FC1LMC0C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "腰射战场" },
 
-  { name: "Vector", sub: "腰射版 (26W)", code: "6HAUNES0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "26万", desc: "腰射入门" },
-  { name: "Vector", sub: "腰射中配版 (29W)", code: "6GOFEC8032SF8AON69MFA", category: "冲锋枪", tab: "fenghuo", cost: "29万", desc: "腰射中配" },
-  { name: "Vector", sub: "28W腰射（绝密巴克什）", code: "6HAUNF00E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "28万", desc: "绝密巴克什腰射" },
-  { name: "Vector", sub: "开镜版 (44W)", code: "6HAUNEO0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "44万", desc: "开镜流配置" },
-  { name: "Vector", sub: "45W腰射（绝密航天）", code: "6HAUNEC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "45万", desc: "绝密航天腰射配置" },
-  { name: "Vector", sub: "58W开镜流", code: "6HAUNDS0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "58万", desc: "开镜流顶配" },
+  { name: "SR-3M", sub: "极致腰射 (46W)", code: "6G1JJPK0FIAS4OUQQ081T", category: "冲锋枪", tab: "fenghuo", cost: "46万", desc: "极致腰射近战" },
+  { name: "SR-3M", sub: "战场腰射100", code: "6FC1LQG0C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "100腰射战场" },
 
-  { name: "SR-3M", sub: "青春版 (13W)", code: "6HAUJ9O0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "13万", desc: "丐版入门" },
-  { name: "SR-3M", sub: "均衡配置", code: "6GT7B0O0EQLEKU76LK98G", category: "冲锋枪", tab: "fenghuo", cost: "满改", desc: "均衡冲锋枪配置" },
-  { name: "SR-3M", sub: "半改 (30W)", code: "6HAUJA00E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "30万", desc: "中配半改" },
-  { name: "SR-3M", sub: "极致腰射 (46W)", code: "6G1JJPK0FIAS4OUQQ081T", category: "冲锋枪", tab: "fenghuo", cost: "46万", desc: "极致腰射配置" },
-  { name: "SR-3M", sub: "极致腰射", code: "6GT7AKO0EQLEKU76LK98G", category: "冲锋枪", tab: "fenghuo", cost: "满改", desc: "腰射精准度拉满" },
-  { name: "SR-3M", sub: "满改腰射 (48W)", code: "6HAUJ9G0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "48万", desc: "满改腰射" },
-  { name: "SR-3M", sub: "S9满改", code: "6JQ6AK80AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "满改", desc: "S9赛季满改" },
-  { name: "SR-3M", sub: "全能版 (63W)", code: "6HAUJ9S0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "63万", desc: "全能顶配" },
-  { name: "SR-3M", sub: "69W轮椅满改", code: "6H5LQRC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "69万", desc: "轮椅满改" },
-  { name: "SR-3M", sub: "S10性价比", code: "6KJEAPK0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
+  { name: "QCQ171", sub: "半改破点版 (24W)", code: "6H734TS0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "24万", desc: "破点高性价比" },
 
-  { name: "QCQ171", sub: "S10性价比", code: "6KJDJGO0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
-  { name: "QCQ171", sub: "49W满改", code: "6H5LQHS0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "49万", desc: "S9赛季满改" },
+  { name: "MK4", sub: "战场全自动", code: "6IL8C78013CE082VBOHIS", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "48发全自动" },
+  { name: "UZI", sub: "战场可腰射", code: "6FC1QN40C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "腰射战场UZI" },
 
-  { name: "勇士", sub: "S10性价比", code: "6KJE8PK0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
-  { name: "勇士", sub: "45W红点", code: "6H53VBO0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "45万", desc: "红点满改" },
-
-  { name: "UZI", sub: "丐版 (12W)", code: "6HAUJBE0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "12万", desc: "丐版冲锋枪" },
-  { name: "UZI", sub: "11W满改", code: "6H5LR180E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "11万", desc: "超便宜满改" },
-
-  { name: "野牛", sub: "丐版 (8W)", code: "6HAUJBC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "8万", desc: "最丐冲锋枪" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 射手步枪
-  // ═══════════════════════════════════════════
-  { name: "M14", sub: "影袭中距配置", code: "6H6I8A00EU90068408QL5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "经典影袭配置，中距压制" },
-  { name: "M14", sub: "EBR远距高稳", code: "6H6I8G00EU90068408QL5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "经典EBR配置，远距高稳定性" },
-  { name: "M14", sub: "共二机动版", code: "6H6I8KC0EU90068408QL5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "高操控性，灵活扫射" },
-  { name: "M14", sub: "半改 (44W)", code: "6HAUJS40E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "44万", desc: "半改中配" },
+  // ═══ 射手步枪 ═══
+  { name: "M14", sub: "影袭中距配置", code: "6H6I8A00EU90068408QL5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "经典影袭配置" },
+  { name: "M14", sub: "EBR远距高稳", code: "6H6I8G00EU90068408QL5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "经典EBR配置" },
   { name: "M14", sub: "高配猛攻版 (59W)", code: "6GC2JNG04QRQQL6OOBF6G", category: "射手步枪", tab: "fenghuo", cost: "59万", desc: "猛攻流高配" },
-  { name: "M14", sub: "S9中远版", code: "6JQ3NTO0AO21USGQ8AC2S", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "S9中远最优" },
+  { name: "M14", sub: "战场50发版", code: "6JBKMQ400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "50发战场M14" },
+  { name: "M14", sub: "战场30发版", code: "6J82PLC00SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "30发战场M14" },
 
-  { name: "SVCH", sub: "狙击T0满改 (S10新枪)", code: "6KHPO1G0AO21USGQ8AC2S", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "高伤高穿，远距离收割" },
-  { name: "SVCH", sub: "满改红点推荐", code: "6KFCGHO08QMG6NRUK6UQC", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "红点镜满改，精准打击" },
+  { name: "SVCH", sub: "狙击T0满改 (S10新枪)", code: "6KHPO1G0AO21USGQ8AC2S", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "高伤高穿" },
+  { name: "SVCH", sub: "金枪客上交版 (~25W)", code: "6KFCU9S0C2C56U6BB8FNO", category: "射手步枪", tab: "fenghuo", cost: "~25万", desc: "低成本达标" },
 
-  { name: "SR-25", sub: "丐版入门", code: "6IBUKD800S1H2FKJN2JJS", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "丐版SR-25配置" },
+  { name: "PSG-1", sub: "杨齐家版 (50W+)", code: "6GNC00O098SEBSSLM8QIU", category: "射手步枪", tab: "streamer", cost: "50万", desc: "💎 杨齐家版" },
+
+  { name: "Mini-14", sub: "战场游击操速版", code: "6FC1UQ80C78LK1MQ84RUR", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "游击操速Mini-14" },
+
+  // ═══ SR-25 ═══
   { name: "SR-25", sub: "半改性价比 (31W)", code: "6GVGCNS07OULUBJA9PRPI", category: "射手步枪", tab: "fenghuo", cost: "31万", desc: "31W半改高性价比" },
-  { name: "SR-25", sub: "半改 (~30W)", code: "6HAUJRC0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "30万", desc: "中配半改" },
-  { name: "SR-25", sub: "林树同款半改 (36W)", code: "6HR9G7C0BSCDR38JE15T7", category: "射手步枪", tab: "fenghuo", cost: "36万", desc: "🔥 林树同款半改" },
-  { name: "SR-25", sub: "性价比满改 (40W)", code: "6IPJ788085N96GKA2CU5U", category: "射手步枪", tab: "fenghuo", cost: "40万", desc: "40W性价比，74m射程+后座63" },
-  { name: "SR-25", sub: "林树同款 (40W)", code: "6IPJ6L8085N96GKA2CU5U", category: "射手步枪", tab: "streamer", cost: "40万", desc: "🔥 林树同款 40W" },
-  { name: "SR-25", sub: "林树同款二 (40W)", code: "6HR9FMOOBSCDR38JE15T7", category: "射手步枪", tab: "streamer", cost: "40万", desc: "🔥 林树同款 40W版" },
-  { name: "SR-25", sub: "稳定型林树同款 (47W)", code: "6IPJ7BS085N96GKA2CU5U", category: "射手步枪", tab: "streamer", cost: "47万", desc: "🔥 林树同款稳定型，55伤+72据枪" },
-  { name: "SR-25", sub: "半改通用", code: "6IBUKU800S1H2FKJN2JJS", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "半改通用SR-25" },
-  { name: "SR-25", sub: "长管性价比 (54W)", code: "6IBUL4G00S1H2FKJN2JJS", category: "射手步枪", tab: "fenghuo", cost: "54万", desc: "131m射程+后座74，远射之王" },
-  { name: "SR-25", sub: "千岁同款 (60W)", code: "6HR9F44OBSCDR38JE15T7", category: "射手步枪", tab: "streamer", cost: "60万", desc: "👑 千岁同款 60W" },
+  { name: "SR-25", sub: "林树同款半改 (36W)", code: "6HR9G7C0BSCDR38JE15T7", category: "射手步枪", tab: "streamer", cost: "36万", desc: "🔥 林树同款半改" },
+  { name: "SR-25", sub: "性价比满改 (40W)", code: "6IPJ788085N96GKA2CU5U", category: "射手步枪", tab: "fenghuo", cost: "40万", desc: "40W性价比，74m射程" },
+  { name: "SR-25", sub: "林树同款 (40W)", code: "6IPJ6L8085N96GKA2CU5U", category: "射手步枪", tab: "streamer", cost: "40万", desc: "🔥 林树同款" },
+  { name: "SR-25", sub: "林树稳定型 (47W)", code: "6IPJ7BS085N96GKA2CU5U", category: "射手步枪", tab: "streamer", cost: "47万", desc: "🔥 55伤+72据枪" },
+  { name: "SR-25", sub: "长管性价比 (54W)", code: "6IBUL4G00S1H2FKJN2JJS", category: "射手步枪", tab: "fenghuo", cost: "54万", desc: "131m射程+后座74" },
   { name: "SR-25", sub: "满改 (62W)", code: "6GVGCR407OULUBJA9PRPI", category: "射手步枪", tab: "fenghuo", cost: "62万", desc: "满改顶配" },
   { name: "SR-25", sub: "满改 (63W)", code: "6IPJ860085N96GKA2CU5U", category: "射手步枪", tab: "fenghuo", cost: "63万", desc: "63W满改，55伤+30发" },
-  { name: "SR-25", sub: "千岁同款 (69W)", code: "6HR7FR80817N6E2JL6NHN", category: "射手步枪", tab: "streamer", cost: "69万", desc: "👑 千岁同款 69W" },
-  { name: "SR-25", sub: "钟意同款 (70W)", code: "6HR9G2COBSCDR38JE15T7", category: "射手步枪", tab: "streamer", cost: "70万", desc: "💎 钟意同款满改" },
-  { name: "SR-25", sub: "长管堵桥流 (71W)", code: "6IBUKD800S1H2FKJN2JJS", category: "射手步枪", tab: "fenghuo", cost: "71万", desc: "145m射程+后座73，航天堵桥神器" },
+  { name: "SR-25", sub: "千岁同款 (69W)", code: "6HR7FR80817N6E2JL6NHN", category: "射手步枪", tab: "streamer", cost: "69万", desc: "👑 千岁同款" },
+  { name: "SR-25", sub: "长管堵桥流 (71W)", code: "6IBUKD800S1H2FKJN2JJS", category: "射手步枪", tab: "fenghuo", cost: "71万", desc: "145m射程，航天堵桥" },
   { name: "SR-25", sub: "远点满改 (72W)", code: "6IPJ8E0085N96GKA2CU5U", category: "射手步枪", tab: "fenghuo", cost: "72万", desc: "72W远点满改" },
-  { name: "SR-25", sub: "S7满改 (78W)", code: "6IC667K06QOMQD6J47QJA", category: "射手步枪", tab: "fenghuo", cost: "78万", desc: "S7赛季78W满改" },
-  { name: "SR-25", sub: "S8标准满改 (80W)", code: "6HOTVE0049H3TLFDHMKHO", category: "射手步枪", tab: "fenghuo", cost: "80万", desc: "S8标准满改80W" },
+  { name: "SR-25", sub: "战场3/7倍镜", code: "6IL8TFS013CE082VBOHIS", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "中远程收割" },
+  { name: "SR-25", sub: "战场架点版", code: "6JBKHK400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "架点战场" },
+  { name: "SR-25", sub: "战场冲锋版", code: "6JBKHLS00SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "冲锋战场" },
+  { name: "SR-25", sub: "战场精改架点", code: "6HQF8T809Q34170U2BIMC", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "140m架点" },
+  { name: "SR-25", sub: "战场灵活冲锋", code: "6IO63K00F51OP6OU0AVGE", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "260ms开镜" },
+  { name: "SR-25", sub: "战场连狙压制", code: "6IGBH5O0DVV2IQEKG70I3", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "110m稳定连射" },
 
-  // ═══════════════════════════════════════════
-  // 📡 SR-25 — 全面战场系列
-  // ═══════════════════════════════════════════
-  { name: "SR-25", sub: "战场精改架点版", code: "6HQF8T809Q34170U2BIMC", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "新星超长枪管+3/7倍镜，140m架点" },
-  { name: "SR-25", sub: "战场冲锋灵活版", code: "6IO63K00F51OP6OU0AVGE", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "短管+CT增强托，260ms开镜" },
-  { name: "SR-25", sub: "战场连狙压制版", code: "6IGBH5O0DVV2IQEKG70I3", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "110m内稳定连射压制" },
-  { name: "SR-25", sub: "满改 (62W)", code: "6HAUJR80E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "62万", desc: "满改顶配" },
-
-  { name: "PSG-1", sub: "青春版 (26W)", code: "6HAUJQC0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "26万", desc: "入门丐版" },
-  { name: "PSG-1", sub: "满改 (52W)", code: "6HAUJQO0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "52万", desc: "满改配置" },
-
-  { name: "SVD", sub: "满改版 (58W)", code: "6HAUJQS0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "58万", desc: "满改顶配" },
-  { name: "SVD", sub: "51W满改", code: "6H2SFFC0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "51万", desc: "S9赛季满改" },
-
-  { name: "VSS", sub: "满改 (35W)", code: "6HAUJRG0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "35万", desc: "VSS满改配置" },
-
-  { name: "SKS", sub: "丐版 (15W)", code: "6HAUJQ80E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "15万", desc: "丐版入门" },
-  { name: "SKS", sub: "满改 (53W)", code: "6HAUJQ40E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "53万", desc: "满改配置" },
-
-  { name: "MINI14", sub: "半改 (22W)", code: "6HAUJP80E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "22万", desc: "半改中配" },
-  { name: "MINI14", sub: "满改 (42W)", code: "6HAUJPC0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "42万", desc: "满改配置" },
-
-  { name: "SR9", sub: "满改 (36W)", code: "6HAUJO80E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "36万", desc: "满改配置" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 狙击步枪
-  // ═══════════════════════════════════════════
-  { name: "AWM", sub: "S9断档T0", code: "6JPHC500AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季断档T0大狙" },
-  { name: "AWM", sub: "满改版", code: "6H5LRB80E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "59万", desc: "满改顶配" },
-
+  // ═══ 狙击步枪 ═══
+  { name: "AWM", sub: "S9断档T0", code: "6JPHC500AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9断档T0大狙" },
   { name: "巴雷特 M82", sub: "中距架点T0", code: "6JPH8KG0AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9中距架点T0" },
+  { name: "R93", sub: "S10性价比 (28W)", code: "6KJG5MO0AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "28万", desc: "S10高性价比" },
+  { name: "R93", sub: "战场一枪致命", code: "6IL8TJG013CE082VBOHIS", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "3/7倍镜" },
+  { name: "R93", sub: "战场版", code: "6JBKH5400SN1EFGFC1PR0", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "战场R93" },
+  { name: "SV-98", sub: "S10性价比 (29W)", code: "6KJG6RO0AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "29万", desc: "S10高性价比" },
+  { name: "M700", sub: "战场瞬狙版", code: "6FC1KVC0C78LK1MQ84RUR", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "瞬狙配置" },
 
-  { name: "R93", sub: "丐版 (15W)", code: "6HAUJLO0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "15万", desc: "丐版入门" },
-  { name: "R93", sub: "S10性价比 (28W)", code: "6KJG5MO0AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "28万", desc: "S10赛季高性价比" },
-  { name: "R93", sub: "S9满改版", code: "6H5LRFC0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9满改配置" },
-
-  { name: "M700", sub: "丐版 (28W)", code: "6HAUJM40E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "28万", desc: "丐版入门" },
-  { name: "M700", sub: "中配 (41W)", code: "6HAUJMC0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "41万", desc: "中配半改" },
-  { name: "M700", sub: "满改 (49W)", code: "6HAUJM80E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "49万", desc: "满改配置" },
-
-  { name: "SV-98", sub: "丐版 (23W)", code: "6HAUJLO0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "23万", desc: "丐版入门" },
-  { name: "SV-98", sub: "S10性价比 (29W)", code: "6KJG6RO0AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "29万", desc: "S10赛季高性价比" },
-  { name: "SV-98", sub: "S9满改版", code: "6H5406K0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9满改配置" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 轻机枪
-  // ═══════════════════════════════════════════
-  { name: "M250", sub: "青春版 (28W)", code: "6HAUJKO0E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "28万", desc: "入门丐版" },
-  { name: "M250", sub: "半改 (45W)", code: "6HAUJL40E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "45万", desc: "中配半改" },
-  { name: "M250", sub: "满改 (62W)", code: "6HAUJL80E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "62万", desc: "满改顶配" },
+  // ═══ 轻机枪 ═══
   { name: "M250", sub: "S9清图版", code: "6JPHQ640AO21USGQ8AC2S", category: "轻机枪", tab: "fenghuo", cost: "满改", desc: "S9清图利器" },
+  { name: "M250", sub: "战场冲锋版", code: "6JBMU6000SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "冲锋M250" },
+  { name: "M250", sub: "战场0操作架点", code: "6JBT8DK00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "0操作架点" },
+  { name: "M249", sub: "战场架点核心", code: "6IL8QO4013CE082VBOHIS", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "架点扫射" },
+  { name: "M249", sub: "战场腰射版", code: "6JBKGGC00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "腰射M249" },
+  { name: "M249", sub: "战场常规版", code: "6JBKGLO00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "常规战场" },
+  { name: "PKM", sub: "战场火控架枪版", code: "6FC1VLS0C78LK1MQ84RUR", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "火控架枪" },
+  { name: "QJB201", sub: "战场125发压制", code: "6IL8DCS013CE082VBOHIS", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "125发大弹匣" },
 
-  { name: "M249", sub: "青春版 (17W)", code: "6HAUJK80E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "17万", desc: "丐版入门" },
-  { name: "M249", sub: "半改 (31W)", code: "6HAUJKG0E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "31万", desc: "中配半改" },
-  { name: "M249", sub: "满改 (45W)", code: "6HAUJKC0E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "45万", desc: "满改配置" },
+  // ═══ 霰弹枪 / 其他 ═══
+  { name: "S12K", sub: "战场高容错", code: "6FC1LV40C78LK1MQ84RUR", category: "霰弹枪", tab: "battlefield", cost: "满改", desc: "高容错率" },
+  { name: "S12K", sub: "战场版", code: "6EIAL9C02U9HU6AC38CQJ", category: "霰弹枪", tab: "battlefield", cost: "满改", desc: "战场S12K" },
+  { name: "G18", sub: "战场版", code: "6FC1P800C78LK1MQ84RUR", category: "手枪", tab: "battlefield", cost: "满改", desc: "战场G18" },
+  { name: "杠杆式步枪", sub: "战场腰射版", code: "6JBKIE400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "腰射杠杆式" },
 
-  { name: "PKM", sub: "青春版 (22W)", code: "6HAUJIO0E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "22万", desc: "入门丐版" },
-  { name: "PKM", sub: "半改 (31W)", code: "6HAUJJ40E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "31万", desc: "中配半改" },
-  { name: "PKM", sub: "满改三倍 (55W)", code: "6HAUJJ80E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "55万", desc: "三倍镜满改" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 霰弹枪
-  // ═══════════════════════════════════════════
-  { name: "S12K", sub: "满腰射 (12W)", code: "6HAUOA80E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "12万", desc: "满改腰射霰弹枪" },
-  { name: "S12K", sub: "爆闪满腰射 (15W)", code: "6HAUOBC0E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "15万", desc: "爆闪+满腰射" },
-
-  { name: "M1014", sub: "满改 (26W)", code: "6HAUOC40E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "26万", desc: "满改半自动霰弹枪" },
-
-  { name: "725", sub: "腰射喷 (10W)", code: "6HAUOD40E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "10万", desc: "腰射喷入门" },
-  { name: "725", sub: "开镜喷 (19W)", code: "6HAUOD80E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "19万", desc: "开镜流配置" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 手枪
-  // ═══════════════════════════════════════════
-  { name: "G18", sub: "满改 (10W)", code: "6HAUOE40E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "10万", desc: "全自动手枪满改" },
-  { name: "沙鹰", sub: "满改 (6W)", code: "6HAUOF40E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "6万", desc: "沙鹰满改" },
-  { name: "93R", sub: "满改 (12W)", code: "6HAUOG40E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "12万", desc: "三连发手枪满改" },
-  { name: "左轮", sub: "腰射版 (26W)", code: "6HAUOF80E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "26万", desc: "腰射流左轮" },
-  { name: "左轮", sub: "开镜版 (28W)", code: "6HAUOFC0E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "28万", desc: "开镜流左轮" },
-
-  // ═══════════════════════════════════════════
-  // ⚔️ 全面战场
-  // ═══════════════════════════════════════════
-  { name: "K416", sub: "新手稳定版", code: "6KIPN4K087KKF9T2HJCH4", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "稳定性优先，适合新手" },
-  { name: "K416", sub: "进阶操控版", code: "6KIPN64087KKF9T2HJCH4", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "操控性增强，进阶玩家首选" },
-  { name: "AKM", sub: "职业同款", code: "6KIOL8K02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "职业选手同款配置" },
-  { name: "AKM", sub: "三枪带走 (30发)", code: "6IL892K013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "高伤害，上胸三枪一个" },
-  { name: "腾龙", sub: "突击容错 (30发)", code: "6IL87QG013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "无导气+30发，容错率高" },
-  { name: "AK-12", sub: "中距压制 (45发+三倍)", code: "6IL88AC013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "45发弹匣+三倍镜" },
-  { name: "M7", sub: "屏息稳压", code: "6IL89B4013CE082VBOHIS", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "屏息后座极低，精准打击" },
-  { name: "M7", sub: "不屏息手感", code: "6IL8A7O013CE082VBOHIS", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "不屏息也有好手感" },
-  { name: "AS Val", sub: "贴脸爆发 (45发+四连发)", code: "6IFUEKK013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "45发弹匣+四连发，贴脸秒杀" },
-  { name: "MP5", sub: "冲脸救人 (50发)", code: "6IL8BQK013CE082VBOHIS", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "50发弹匣，近距离救援神器" },
-  { name: "MK4", sub: "全自动容错 (48发)", code: "6IL8C78013CE082VBOHIS", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "48发全自动，容错率高" },
-  { name: "M249", sub: "架点核心", code: "6IL8QO4013CE082VBOHIS", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "架点扫射，压制火力" },
-  { name: "QJB201", sub: "125发火力压制", code: "6IL8DCS013CE082VBOHIS", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "125发大弹匣，持续输出" },
-  { name: "AUG", sub: "60发弹鼓压制", code: "6IL8TC8013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "60发弹鼓+稳定输出" },
-  { name: "SR-25", sub: "3/7倍镜中远收割", code: "6IL8TFS013CE082VBOHIS", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "3/7倍镜，中远程收割机" },
-  { name: "R93", sub: "一枪致命 (3/7倍镜)", code: "6IL8TJG013CE082VBOHIS", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "3/7倍镜，一枪毙命" },
-  { name: "MP7", sub: "全面战场配置", code: "6HB6614064DU5TFLJ691H", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "全面战场冲锋枪方案" },
-  { name: "M4A1", sub: "全面战场红点版", code: "6FC1NKK0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "全面战场红点配置" },
-  { name: "M4A1", sub: "全面战场倍镜版", code: "6FC1NT40C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "全面战场倍镜配置" },
-  { name: "SCAR-H", sub: "全面战场红点版", code: "6FC1J2G0C78LK1MQ84RUR", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "全面战场红点配置" },
-  { name: "SCAR-H", sub: "全面战场倍镜版", code: "6FC1JRO0C78LK1MQ84RUR", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "全面战场倍镜配置" },
-  { name: "M700", sub: "全面战场瞬狙版", code: "6FC1KVC0C78LK1MQ84RUR", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "全面战场瞬狙配置" },
-  { name: "S12K", sub: "全面战场高容错", code: "6FC1LV40C78LK1MQ84RUR", category: "霰弹枪", tab: "battlefield", cost: "满改", desc: "高容错率霰弹枪" },
-
-  // ═══════════════════════════════════════════
-  // ⭐ 主播同款
-  // ═══════════════════════════════════════════
+  // ═══ 主播同款 ═══
   { name: "M7", sub: "林树·战斗步枪", code: "6H52MG807ODLT6ETQT3GS", category: "战斗步枪", tab: "streamer", cost: "满改", desc: "🔥 林树同款 M7" },
   { name: "M14", sub: "林树·射手步枪", code: "6KHGLG00BNSV43TFRAQ1K", category: "射手步枪", tab: "streamer", cost: "满改", desc: "🔥 林树同款 M14" },
+  { name: "M14", sub: "昊天同款 (104W)", code: "6HDL6K80ENDUQ0EFJGCAD", category: "射手步枪", tab: "streamer", cost: "104万", desc: "🔥 昊天同款 M14" },
   { name: "M7", sub: "老飞宇 (92W)", code: "6H5ADQC05A947LDE85PAK", category: "战斗步枪", tab: "streamer", cost: "92万", desc: "⭐ 老飞宇同款 M7" },
   { name: "AS Val", sub: "老飞宇 (58W)", code: "6HHOE5K0FFIB7A6U8GMU3", category: "突击步枪", tab: "streamer", cost: "58万", desc: "⭐ 老飞宇同款 AS Val" },
   { name: "MP5", sub: "老飞宇 (17W/50发)", code: "6HLKSCC0FFIB7A6U8GMU3", category: "冲锋枪", tab: "streamer", cost: "17万", desc: "⭐ 老飞宇同款 MP5" },
   { name: "K416", sub: "杨齐家 (74W双爆闪)", code: "6GQUTD40D9T4K2M106QN0", category: "突击步枪", tab: "streamer", cost: "74万", desc: "💎 杨齐家同款 K416" },
   { name: "AS Val", sub: "杨齐家 (67W)", code: "6GNLPCK0CNCS5MQIPJEN8", category: "突击步枪", tab: "streamer", cost: "67万", desc: "💎 杨齐家同款 AS Val" },
+  { name: "MCX LT", sub: "林树同款 (52W)⭐", code: "6J137P0085N96GKA2CU5U", category: "突击步枪", tab: "streamer", cost: "52万", desc: "🔥 林树同款！爆头68，60发" },
   { name: "MCX LT", sub: "杨齐家 (80W)", code: "6IUQ2CK0CCNN7V1KCQCD1", category: "突击步枪", tab: "streamer", cost: "80万", desc: "💎 杨齐家同款 MCX LT" },
   { name: "AS Val", sub: "白泽同款", code: "6HABLBG0BSCDR38JE15T7", category: "突击步枪", tab: "streamer", cost: "满改", desc: "🌟 白泽同款 AS Val" },
   { name: "SR-3M", sub: "南波万同款", code: "6H8MUR809VRBFP6UQGAT9", category: "冲锋枪", tab: "streamer", cost: "满改", desc: "🏆 南波万同款 SR-3M" },
-  { name: "AKM", sub: "安澜颗秒", code: "6ID785005JKOAP04RBN2K", category: "突击步枪", tab: "streamer", cost: "满改", desc: "💥 安澜同款 AKM 颗秒配置" },
+  { name: "AKM", sub: "安澜颗秒", code: "6ID785005JKOAP04RBN2K", category: "突击步枪", tab: "streamer", cost: "满改", desc: "💥 安澜同款 AKM 颗秒" },
   { name: "M4", sub: "苏醒同款", code: "6RSGK80ENDUQQEFUGMED", category: "突击步枪", tab: "streamer", cost: "满改", desc: "🎯 苏醒同款 M4" },
-
-  // ═══════════════════════════════════════════
-  // 🎖️ 金枪客任务
-  // ═══════════════════════════════════════════
-  { name: "RM277", sub: "金枪客上交版", code: "6KFCTUS0C2C56U6BB8FNO", category: "突击步枪", tab: "gold", cost: "~17万", desc: "低成本达标，完成金枪客任务" },
-  { name: "SVCH", sub: "金枪客上交版", code: "6KFCU9S0C2C56U6BB8FNO", category: "射手步枪", tab: "gold", cost: "~25万", desc: "低成本达标，完成金枪客任务" },
-  { name: "ASh-12", sub: "金枪客上交版", code: "6KFCUEG0C2C56U6BB8FNO", category: "战斗步枪", tab: "gold", cost: "满改", desc: "金枪客任务专属" },
-  { name: "SVCH", sub: "满改红点推荐", code: "6KFCGHO08QMG6NRUK6UQC", category: "射手步枪", tab: "gold", cost: "满改", desc: "红点镜满改，精准打击" },
-  { name: "SVCH", sub: "金枪客性价比", code: "6KFCSOS08QMG6NRUK6UQC", category: "射手步枪", tab: "gold", cost: "中配", desc: "性价比之选" },
-  { name: "RM277", sub: "金枪客性价比", code: "6KFCQQ808QMG6NRUK6UQC", category: "突击步枪", tab: "gold", cost: "中配", desc: "性价比之选" },
-
-  // ═══════════════════════════════════════════
-  // 💰 KC17 方案
-  // ═══════════════════════════════════════════
-  { name: "KC17", sub: "青春版 (20W)", code: "6HAUJ7O0E5QUTQP36HK9K", category: "突击步枪", tab: "budget", cost: "20万", desc: "丐版入门" },
-  { name: "KC17", sub: "满改火控 (45W)", code: "6HAUJ8G0E5QUTQP36HK9K", category: "突击步枪", tab: "budget", cost: "45万", desc: "火控满改性价比" },
-  { name: "KC17", sub: "短管FFC顶配", code: "6KI9V3C0EU90O684D8QL5", category: "突击步枪", tab: "budget", cost: "~55万", desc: "短管FFC制退器顶配" },
-  { name: "KC17", sub: "长管FFC倍镜版", code: "6KIA01C0EU90O684D8QL5", category: "突击步枪", tab: "budget", cost: "~60万", desc: "长管+FFC+倍镜" },
-  { name: "KC17", sub: "长管密令沙暴倍镜版", code: "6KI9VQG0EU90O684D8QL5", category: "突击步枪", tab: "budget", cost: "~60万", desc: "长管密令沙暴补偿器+倍镜" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 紧凑步枪
-  // ═══════════════════════════════════════════
-  { name: "SR-3M", sub: "青春版 (13W)", code: "6HAUJ9O0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "13万", desc: "丐版入门紧凑步枪" },
-  { name: "SR-3M", sub: "半改 (30W)", code: "6HAUJA00E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "30万", desc: "中配半改" },
-  { name: "SR-3M", sub: "极致腰射 (46W)", code: "6G1JJPK0FIAS4OUQQ081T", category: "紧凑步枪", tab: "fenghuo", cost: "46万", desc: "极致腰射，近战短剑" },
-  { name: "SR-3M", sub: "满改腰射 (48W)", code: "6HAUJ9G0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "48万", desc: "满改腰射顶配" },
-  { name: "SR-3M", sub: "全能版 (63W)", code: "6HAUJ9S0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "63万", desc: "全能顶配" },
-  { name: "SR-3M", sub: "69W轮椅满改", code: "6H5LQRC0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "69万", desc: "轮椅配置，极致体验" },
-  { name: "AKS-74U", sub: "青春版 (9W)", code: "6HAUJ9G0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "9万", desc: "最丐紧凑步枪" },
-
-  { name: "MCX LT", sub: "30发版", code: "6HAUERC0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "满改", desc: "30发可改45弹匣，紧凑灵活" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 弓
-  // ═══════════════════════════════════════════
-  { name: "复合弓", sub: "满改竞赛版 (30W)", code: "6HAUOG80E5QUTQP36HK9K", category: "弓", tab: "fenghuo", cost: "30万", desc: "增强弓弦+竞赛箭台，潜行神器" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 近战特化（补充新码）
-  // ═══════════════════════════════════════════
-  { name: "P90", sub: "大改破点版 (28W)", code: "6H734BG0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "28万", desc: "大改破点流P90" },
-  { name: "QCQ171", sub: "半改破点版 (24W)", code: "6H734TS0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "24万", desc: "半改破点高性价比" },
-  { name: "MP7", sub: "半改全能版 (29W)", code: "6H7378K0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "29万", desc: "半改全能冲锋" },
-  { name: "Vector", sub: "大改全能版 (36W)", code: "6H7375G0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "36万", desc: "大改全能Vector" },
-  { name: "K437", sub: "近战大改全能 (29W)", code: "6H737QG0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "29万", desc: "近战大改全能版" },
-  { name: "ASh-12", sub: "近战贴脸版 (S10金枪客)", code: "6KFCUF00C2C56U6BB8FNO", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "S10金枪客近战贴脸" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 性价比半改系列
-  // ═══════════════════════════════════════════
-  { name: "K416", sub: "半改性价比 (30W+)", code: "6H0P6BS04B3997JL52F1O", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改红点高性价比" },
-  { name: "K416", sub: "半改红点版 (35W)", code: "6HBOVD400L4AD1AGIEDEN", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "半改红点均衡配置" },
-  { name: "K416", sub: "满改性价比 (39W)", code: "6FV0SVS0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "39万", desc: "39W性价比满改" },
-  { name: "M7", sub: "半改性价比 (30W+)", code: "6H0P4C804B3997JL52F1O", category: "战斗步枪", tab: "fenghuo", cost: "30万", desc: "半改红点高性价比" },
-  { name: "M7", sub: "半改红点版 (35W)", code: "6HBOV7C00L4AD1AGIEDEN", category: "战斗步枪", tab: "fenghuo", cost: "35万", desc: "半改红点M7" },
-  { name: "M7", sub: "半改极限版 (48W)", code: "6FV7Q2K0B12QASUQB4J4K", category: "战斗步枪", tab: "fenghuo", cost: "48万", desc: "48W半改极限" },
-  { name: "AS Val", sub: "半改红点版 (30W)", code: "6HBOUM800L4AD1AGIEDEN", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改红点巨浪" },
-  { name: "AS Val", sub: "满改性价比 (36W)", code: "6FV0KUG0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "36万", desc: "36W性价比满改" },
-  { name: "SCAR-H", sub: "半改红点版 (30W)", code: "6HBOUP400L4AD1AGIEDEN", category: "战斗步枪", tab: "fenghuo", cost: "30万", desc: "半改红点SCAR" },
-  { name: "SCAR-H", sub: "半改性价比 (30W+)", code: "6H0PAHS04B3997JL52F1O", category: "战斗步枪", tab: "fenghuo", cost: "30万", desc: "半改高性价比" },
-  { name: "SCAR-H", sub: "满改性价比 (35W)", code: "6FV7P1S0B12QASUQB4J4K", category: "战斗步枪", tab: "fenghuo", cost: "35万", desc: "35W性价比满改" },
-  { name: "AKM", sub: "半改红点版 (30W)", code: "6HBOVFS00L4AD1AGIEDEN", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改红点AKM" },
-  { name: "AKM", sub: "半改性价比 (30W+)", code: "6H0P1EG04B3997JL52F1O", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改高性价比" },
-  { name: "AKM", sub: "满改性价比 (29W)", code: "6FV0MES0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "29万", desc: "29W性价比满改AKM" },
-
-  // ═══════════════════════════════════════════
-  // 🔥 烽火地带 — 更多主播同款
-  // ═══════════════════════════════════════════
-  { name: "M14", sub: "昊天同款 (104W)", code: "6HDL6K80ENDUQ0EFJGCAD", category: "射手步枪", tab: "streamer", cost: "104万", desc: "🔥 昊天同款 M14 顶配" },
-  { name: "M14", sub: "白泽丐版 (20W+)", code: "6GQ0VK00FIAS4OUQQ081T", category: "射手步枪", tab: "streamer", cost: "20万", desc: "🌟 白泽丐版 M14" },
-  { name: "K416", sub: "白泽丐版 (20W+)", code: "6G197CK06TRF107Q8PIO9", category: "突击步枪", tab: "streamer", cost: "20万", desc: "🌟 白泽丐版 K416" },
-  { name: "K416", sub: "艺术同款 (72W)", code: "6HESIACOENDUQ0EFJGCAD", category: "突击步枪", tab: "streamer", cost: "72万", desc: "🎨 艺术同款 K416" },
-  { name: "K437", sub: "白泽版 (50W)", code: "6GPI5OS0EU90O684D8QL5", category: "突击步枪", tab: "streamer", cost: "50万", desc: "🌟 白泽版 K437" },
-  { name: "M7", sub: "杨齐家版 (70-90W)", code: "6HFNFBK071IV3H7JMK9SA", category: "战斗步枪", tab: "streamer", cost: "80万", desc: "💎 杨齐家版 M7" },
-  { name: "AS Val", sub: "白泽同款 (61W)", code: "6GNJSFC0FUH1E5MQ63E4O", category: "突击步枪", tab: "streamer", cost: "61万", desc: "🌟 白泽同款 AS Val" },
-  { name: "SR-3M", sub: "昊天版 (60W+)", code: "6G9RFLG0CPEOKJEAQ15OG", category: "冲锋枪", tab: "streamer", cost: "60万", desc: "🔥 昊天版 SR-3M" },
-  { name: "PSG-1", sub: "杨齐家版 (50W+)", code: "6GNC00O098SEBSSLM8QIU", category: "射手步枪", tab: "streamer", cost: "50万", desc: "💎 杨齐家版 PSG-1" },
-  { name: "SR-25", sub: "千岁同款 (69W)", code: "6HR7FR80817N6E2JL6NHN", category: "射手步枪", tab: "streamer", cost: "69万", desc: "👑 千岁同款 SR-25" },
-  { name: "QCQ171", sub: "杨齐家版 (20W+)", code: "6HIAIOO0F5FTUU9D1RAH1", category: "冲锋枪", tab: "streamer", cost: "20万", desc: "💎 杨齐家版 QCQ171" },
-  { name: "QCQ171", sub: "苏醒同款 (60W)", code: "6HILJDG0EOFGDIS4U8RJ2", category: "冲锋枪", tab: "streamer", cost: "60万", desc: "🎯 苏醒同款 QCQ171" },
+  { name: "QCQ171", sub: "杨齐家版 (20W+)", code: "6HIAIOO0F5FTUU9D1RAH1", category: "冲锋枪", tab: "streamer", cost: "20万", desc: "💎 杨齐家版" },
+  { name: "QCQ171", sub: "苏醒同款 (60W)", code: "6HILJDG0EOFGDIS4U8RJ2", category: "冲锋枪", tab: "streamer", cost: "60万", desc: "🎯 苏醒同款" },
   { name: "MP7", sub: "林树版 (40W)", code: "6H3OFM806ALD54C0SAGB3", category: "冲锋枪", tab: "streamer", cost: "40万", desc: "🔥 林树版 MP7" },
   { name: "P90", sub: "林树版 (40W+)", code: "6H1HI140B9I04M2JUJ0H8", category: "冲锋枪", tab: "streamer", cost: "40万", desc: "🔥 林树版 P90" },
   { name: "SMG-45", sub: "林树版 (30W+)", code: "6H3OFG006ALD54C0SAGB3", category: "冲锋枪", tab: "streamer", cost: "30万", desc: "🔥 林树版 SMG-45" },
@@ -1305,105 +1076,13 @@ const guns = [
   { name: "M250", sub: "白泽版 (50W+)", code: "6FQ0P8C02VPC8AV68TM66", category: "轻机枪", tab: "streamer", cost: "50万", desc: "🌟 白泽版 M250" },
   { name: "PKM", sub: "白泽版 (40W+)", code: "6GRGCDS07GMVM2B973KSJ", category: "轻机枪", tab: "streamer", cost: "40万", desc: "🌟 白泽版 PKM" },
   { name: "Vector", sub: "白泽版 (30W+)", code: "6FC8M2O0E5E2193149FR0", category: "冲锋枪", tab: "streamer", cost: "30万", desc: "🌟 白泽版 Vector" },
-
-  // ═══════════════════════════════════════════
-  // ⚔️ 全面战场 — 突击步枪 补充
-  // ═══════════════════════════════════════════
-  { name: "K416", sub: "全面战场满配60发", code: "6EIALPC02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "60发弹匣满配" },
-  { name: "K416", sub: "全面战场通用版", code: "6G46HDO003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用配置" },
-  { name: "M4A1", sub: "全面战场45发弹匣", code: "6EIAL7C02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "45发弹匣战场版" },
-  { name: "M4A1", sub: "全面战场通用版", code: "6G46HAK003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用M4A1" },
-  { name: "AKM", sub: "全面战场版", code: "6EIAL2G02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场AKM配置" },
-  { name: "AKM", sub: "全面战场红点版", code: "6FC1THO0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场红点AKM" },
-  { name: "AKM", sub: "全面战场通用版", code: "6GBKIS4003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用AKM" },
-  { name: "腾龙", sub: "全面战场红点版", code: "6FC1S5K0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场红点腾龙" },
-  { name: "腾龙", sub: "全面战场短管版", code: "6JBKENG00SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "短管战场腾龙" },
-  { name: "腾龙", sub: "全面战场消音版", code: "6GH2UEKOACJLENNDR871G", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "消音战场腾龙" },
-  { name: "AS Val", sub: "全面战场可腰射", code: "6FC1LEC0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "腰射战场巨浪" },
-  { name: "AS Val", sub: "全面战场版", code: "6EIAKVC02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场巨浪配置" },
-  { name: "AS Val", sub: "全面战场通用版", code: "6GBKJV0003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用巨浪" },
-  { name: "SCAR-H", sub: "全面战场版", code: "6EIAUAK02U9HU6AC38CQJ", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "战场SCAR配置" },
-  { name: "SCAR-H", sub: "全面战场通用版", code: "6FF4DCK003VFRI96M4LF5", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "战场通用SCAR" },
-  { name: "AUG", sub: "全面战场短管版", code: "6JBKG1K00SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "短管战场AUG" },
-  { name: "AUG", sub: "全面战场通用版", code: "6FJ249G003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用AUG" },
-  { name: "CAR-15", sub: "全面战场版", code: "6FC1LGS0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场CAR-15配置" },
-  { name: "CAR-15", sub: "全面战场通用版", code: "6G46H18003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用CAR-15" },
-  { name: "PTR-32", sub: "全面战场版", code: "6EIAKTC02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场PTR-32配置" },
-  { name: "PTR-32", sub: "全面战场30发版", code: "6JBKF4000SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "30发战场PTR-32" },
-  { name: "PTR-32", sub: "全面战场40发版", code: "6JBKFBG00SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "40发战场PTR-32" },
-  { name: "PTR-32", sub: "全面战场通用版", code: "6GGD29C003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用PTR-32" },
-  { name: "M7", sub: "全面战场版", code: "6EIATGS02U9HU6AC38CQJ", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "战场M7配置" },
-  { name: "M7", sub: "全面战场通用版", code: "6FRGRM4003VFRI96M4LF5", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "战场通用M7" },
-  { name: "MK47", sub: "全面战场版", code: "6JBKFP800SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场MK47配置" },
-  { name: "SG552", sub: "全面战场消音版", code: "6GL1JG80ACJLENNDR871G", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "消音战场SG552" },
-  { name: "SG552", sub: "全面战场通用版", code: "6FRGROK003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用SG552" },
-  { name: "K437", sub: "全面战场通用版", code: "6GOJH10003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用K437" },
-  { name: "QBZ95-1", sub: "全面战场通用版", code: "6G1DQJ0003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用95式" },
-  { name: "AK-12", sub: "全面战场通用版", code: "6FUTEG4003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用AK-12" },
-  { name: "191式", sub: "全面战场版", code: "6EIAL5002U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场191式配置" },
-
-  // ═══════════════════════════════════════════
-  // ⚔️ 全面战场 — 冲锋枪 补充
-  // ═══════════════════════════════════════════
-  { name: "UZI", sub: "全面战场版", code: "6EIALBS02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场UZI配置" },
-  { name: "UZI", sub: "全面战场可腰射", code: "6FC1QN40C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "腰射战场UZI" },
-  { name: "MP7", sub: "全面战场满改", code: "6EIAOLG02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场满改MP7" },
-  { name: "野牛", sub: "全面战场版", code: "6EIANV002U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场野牛配置" },
-  { name: "野牛", sub: "全面战场通用版", code: "6G1DP9G003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用野牛" },
-  { name: "SMG-45", sub: "全面战场版", code: "6EIAN5K02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场SMG-45配置" },
-  { name: "SMG-45", sub: "全面战场腰射100", code: "6FC1Q900C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "100腰射战场SMG-45" },
-  { name: "SMG-45", sub: "全面战场通用版", code: "6GBKJ48003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用SMG-45" },
-  { name: "SR-3M", sub: "全面战场版", code: "6EIAQ5O02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场SR-3M配置" },
-  { name: "SR-3M", sub: "全面战场腰射100", code: "6FC1LQG0C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "100腰射战场SR-3M" },
-  { name: "SR-3M", sub: "全面战场通用版", code: "6G46HM0003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用SR-3M" },
-  { name: "MP5", sub: "全面战场版", code: "6EIAQQO02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场MP5配置" },
-  { name: "MP5", sub: "全面战场通用版", code: "6GBKJ28003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用MP5" },
-  { name: "Vector", sub: "全面战场版", code: "6EIAREK02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场Vector配置" },
-  { name: "Vector", sub: "全面战场可腰射", code: "6FC1LMC0C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "腰射战场Vector" },
-  { name: "Vector", sub: "全面战场通用版", code: "6GBKJ7K003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用Vector" },
-  { name: "勇士", sub: "全面战场版", code: "6EIAPD802U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场勇士配置" },
-  { name: "P90", sub: "全面战场通用版", code: "6G46HN0003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用P90" },
-  { name: "QCQ171", sub: "全面战场通用版", code: "6FRGRH4003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用QCQ171" },
-
-  // ═══════════════════════════════════════════
-  // ⚔️ 全面战场 — 射手步枪 / 狙击 / 机枪 补充
-  // ═══════════════════════════════════════════
-  { name: "M14", sub: "全面战场50发版", code: "6JBKMQ400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "50发战场M14" },
-  { name: "M14", sub: "全面战场30发版", code: "6J82PLC00SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "30发战场M14" },
-  { name: "M14", sub: "全面战场通用版", code: "6EIBB2C02U9HU6AC38CQJ", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "战场通用M14" },
-  { name: "SR-25", sub: "全面战场架点版", code: "6JBKHK400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "架点战场SR-25" },
-  { name: "SR-25", sub: "全面战场冲锋版", code: "6JBKHLS00SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "冲锋战场SR-25" },
-  { name: "SR-25", sub: "全面战场版", code: "6EIBCOC02U9HU6AC38CQJ", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "战场SR-25配置" },
-  { name: "Mini-14", sub: "全面战场版", code: "6EIBDN802U9HU6AC38CQJ", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "战场Mini-14配置" },
-  { name: "Mini-14", sub: "全面战场游击操速版", code: "6FC1UQ80C78LK1MQ84RUR", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "游击操速Mini-14" },
-  { name: "PSG-1", sub: "全面战场版", code: "6EIBEK802U9HU6AC38CQJ", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "战场PSG-1配置" },
-  { name: "R93", sub: "全面战场版", code: "6JBKH5400SN1EFGFC1PR0", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "战场R93配置" },
-  { name: "AWM", sub: "全面战场版", code: "6G4615C003VFRI96M4LF5", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "战场AWM配置" },
-  { name: "M700", sub: "全面战场通用版", code: "6G46140003VFRI96M4LF5", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "战场通用M700" },
-  { name: "M249", sub: "全面战场腰射版", code: "6JBKGGC00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "腰射战场M249" },
-  { name: "M249", sub: "全面战场常规版", code: "6JBKGLO00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "常规战场M249" },
-  { name: "M249", sub: "全面战场版", code: "6EIAV5802U9HU6AC38CQJ", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "战场M249配置" },
-  { name: "PKM", sub: "全面战场版", code: "6EIAVVS02U9HU6AC38CQJ", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "战场PKM配置" },
-  { name: "PKM", sub: "全面战场火控架枪版", code: "6FC1VLS0C78LK1MQ84RUR", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "火控架枪战场PKM" },
-  { name: "M250", sub: "全面战场冲锋版", code: "6JBMU6000SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "冲锋战场M250" },
-  { name: "M250", sub: "全面战场0操作架点", code: "6JBT8DK00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "0操作架点M250" },
-  { name: "M250", sub: "全面战场版", code: "6EH17F402U9HU6AC38CQJ", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "战场M250配置" },
-  { name: "M250", sub: "全面战场通用版", code: "6F12AR4003VFR196M4LF5", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "战场通用M250" },
-
-  // ═══════════════════════════════════════════
-  // ⚔️ 全面战场 — 其他
-  // ═══════════════════════════════════════════
-  { name: "S12K", sub: "全面战场版", code: "6EIAL9C02U9HU6AC38CQJ", category: "霰弹枪", tab: "battlefield", cost: "满改", desc: "战场S12K配置" },
-  { name: "G18", sub: "全面战场版", code: "6FC1P800C78LK1MQ84RUR", category: "手枪", tab: "battlefield", cost: "满改", desc: "战场G18配置" },
-  { name: "杠杆式步枪", sub: "全面战场腰射版", code: "6JBKIE400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "腰射杠杆式步枪" },
-
-  // ═══════════════════════════════════════════
-  // 📦 综合补充
-  // ═══════════════════════════════════════════
-  { name: "M14", sub: "M14通用版", code: "6G46104003VFRI96M4LF5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "战场/烽火通用M14" },
-  { name: "SR-25", sub: "SR-25通用版", code: "6G4628003VFRI96M4LF5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "战场/烽火通用SR-25" },
-  { name: "G3", sub: "杨齐家同款丐版 (22W)", code: "6GI1TIS0D06PJ9BGGJFPR", category: "战斗步枪", tab: "fenghuo", cost: "22万", desc: "杨齐家同款丐版G3" },
+  { name: "K416", sub: "艺术同款 (72W)", code: "6HESIACOENDUQ0EFJGCAD", category: "突击步枪", tab: "streamer", cost: "72万", desc: "🎨 艺术同款 K416" },
+  { name: "M7", sub: "杨齐家版 (70-90W)", code: "6HFNFBK071IV3H7JMK9SA", category: "战斗步枪", tab: "streamer", cost: "80万", desc: "💎 杨齐家版 M7" },
+  { name: "K437", sub: "白泽版 (50W)", code: "6GPI5OS0EU90O684D8QL5", category: "突击步枪", tab: "streamer", cost: "50万", desc: "🌟 白泽版 K437" },
 ];
+
+// Attach numeric price to built-in once
+guns.forEach(g => { g._price = parsePrice(g.cost); });
 
 // ─── User-added codes (persisted in localStorage) ───
 let userGuns = [];
@@ -1416,13 +1095,11 @@ function saveUserGuns() {
   try { localStorage.setItem('delta_gun_userdata', JSON.stringify(userGuns)); } catch(e) {}
 }
 
-// Merge built-in + user codes, attach price
 function allGuns() {
   return [...guns, ...userGuns];
 }
 
-// Attach numeric price to built-in once
-guns.forEach(g => { g._price = parsePrice(g.cost); });
+userGuns.forEach(g => { g._price = parsePrice(g.cost); });
 
 // ─── Modal logic ───
 let editingCode = null; // non-null = editing a user code
@@ -1502,8 +1179,10 @@ function deleteUserGun(code) {
   if (!confirm('确定删除这个方案吗？此操作不可恢复。')) return;
   userGuns = userGuns.filter(g => g.code !== code);
   if (expiredCodes.has(code)) expiredCodes.delete(code);
+  if (favedCodes.has(code)) favedCodes.delete(code);
   saveUserGuns();
   saveExpired();
+  saveFavorites();
   render();
   showToast('🗑 方案已删除');
 }
@@ -1532,6 +1211,27 @@ function toggleExpired(code) {
   render();
 }
 
+// ─── Favorite codes (persisted in localStorage) ───
+let favedCodes = new Set();
+try {
+  const saved = localStorage.getItem('delta_gun_favorites');
+  if (saved) { favedCodes = new Set(JSON.parse(saved)); }
+} catch(e) {}
+
+function saveFavorites() {
+  try { localStorage.setItem('delta_gun_favorites', JSON.stringify([...favedCodes])); } catch(e) {}
+}
+
+function toggleFav(code) {
+  if (favedCodes.has(code)) {
+    favedCodes.delete(code);
+  } else {
+    favedCodes.add(code);
+  }
+  saveFavorites();
+  render();
+}
+
 // ─── State ───
 let activeTab = 'all';
 let searchQuery = '';
@@ -1549,7 +1249,8 @@ function render() {
 
   // Step 2: filter
   let filtered = merged.filter(g => {
-    if (activeTab !== 'all' && g.tab !== activeTab) return false;
+    if (activeTab !== 'all' && activeTab !== 'mine' && g.tab !== activeTab) return false;
+    if (activeTab === 'mine' && !favedCodes.has(g.code) && !userGuns.some(ug => ug.code === g.code)) return false;
     if (categoryFilter !== 'all' && g.category !== categoryFilter) return false;
     if (priceFilter !== 'all') {
       const p = g._price;
@@ -1618,6 +1319,7 @@ function render() {
           <div class="card-meta">
             <span>💰 ${g.cost}</span>
             <span>🏷️ ${getTabLabel(g.tab)}</span>
+            <button class="fav-btn ${favedCodes.has(g.code) ? 'faved' : ''}" onclick="toggleFav('${g.code.replace(/'/g, "\\'")}'); event.stopPropagation();" title="${favedCodes.has(g.code) ? '取消收藏' : '收藏到我的改枪码'}">${favedCodes.has(g.code) ? '⭐' : '☆'}</button>
             <button class="report-btn" onclick="toggleExpired('${g.code.replace(/'/g, "\\'")}'); event.stopPropagation();" title="${isExpired ? '标记为未过期' : '标记为已过期'}">${isExpired ? '🔄 恢复' : '⚠ 过期'}</button>
             ${isUser ? `<button class="edit-btn" onclick="openEditModal('${g.code.replace(/'/g, "\\'")}'); event.stopPropagation();" title="编辑">✏️</button><button class="del-btn" onclick="deleteUserGun('${g.code.replace(/'/g, "\\'")}'); event.stopPropagation();" title="删除">🗑</button>` : ''}
           </div>
@@ -1675,7 +1377,8 @@ function goPage(page) {
   const merged = allGuns();
   const totalPages = Math.max(1, Math.ceil(
     merged.filter(g => {
-      if (activeTab !== 'all' && g.tab !== activeTab) return false;
+      if (activeTab !== 'all' && activeTab !== 'mine' && g.tab !== activeTab) return false;
+    if (activeTab === 'mine' && !favedCodes.has(g.code) && !userGuns.some(ug => ug.code === g.code)) return false;
       if (categoryFilter !== 'all' && g.category !== categoryFilter) return false;
       if (priceFilter !== 'all') {
         const p = g._price;
@@ -1779,6 +1482,7 @@ function getTabLabel(tab) {
     'streamer': '⭐ 主播同款',
     'gold': '🎖️ 金枪客',
     'budget': '💰 KC17',
+    'mine': '💾 我的改枪码',
     'all': '综合',
   };
   return map[tab] || tab;
