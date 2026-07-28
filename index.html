@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三角洲行动 · 改枪码大全 | S10 核子裂变</title>
+<style>
+  :root {
+    --bg-primary: #0a0e12;
+    --bg-secondary: #11161c;
+    --bg-card: #161b22;
+    --bg-card-hover: #1c2430;
+    --border: #21262d;
+    --border-active: #f0b90b;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --accent: #f0b90b;
+    --accent-dim: #9e7a0a;
+    --danger: #ff6b6b;
+    --success: #3fb950;
+    --info: #58a6ff;
+    --purple: #bc8cff;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* --- Header --- */
+  .header {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(240,185,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-icon { font-size: 48px; margin-bottom: 12px; display: block; }
+  .header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f0b90b, #d4a30a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1px;
+  }
+  .header .subtitle {
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-size: 0.95rem;
+  }
+  .header .season-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- Stats Bar --- */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 16px 20px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- Container --- */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+
+  /* --- Search & Filter --- */
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-wrapper {
+    flex: 1;
+    min-width: 220px;
+    position: relative;
+  }
+  .search-wrapper input {
+    width: 100%;
+    padding: 10px 40px 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-size: 0.93rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-wrapper input:focus {
+    border-color: var(--accent);
+  }
+  .search-wrapper input::placeholder { color: var(--text-muted); }
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    font-size: 1.1rem;
+  }
+  .filter-select {
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    outline: none;
+    cursor: pointer;
+    min-width: 130px;
+  }
+  .filter-select:focus { border-color: var(--accent); }
+  .filter-select option { background: var(--bg-card); color: var(--text-primary); }
+
+  .btn {
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+  }
+  .btn-primary:hover { background: #f5c71a; }
+  .btn-outline {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text-primary);
+  }
+  .btn-outline:hover, .btn-outline.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn-outline .arrow { font-size: 0.7rem; margin-left: 2px; }
+
+  /* --- Active Filters Bar --- */
+  .active-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+    min-height: 28px;
+  }
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: rgba(240,185,11,0.1);
+    border: 1px solid rgba(240,185,11,0.3);
+    border-radius: 16px;
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .filter-chip .remove {
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.15s;
+  }
+  .filter-chip .remove:hover { opacity: 1; }
+  .result-count {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .result-count strong { color: var(--accent); }
+
+  /* --- Tabs --- */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab {
+    padding: 10px 20px;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+  .tab.active {
+    background: var(--accent);
+    color: #000;
+  }
+  .tab .emoji { margin-right: 6px; }
+
+  /* --- Grid --- */
+  .gun-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  /* --- Card --- */
+  .gun-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .gun-card:hover {
+    background: var(--bg-card-hover);
+    border-color: #30363d;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .gun-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .gun-card:hover::after { opacity: 1; }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .gun-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .gun-name small {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .gun-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .tag-ar   { background: rgba(240,185,11,0.15); color: var(--accent); }
+  .tag-smg  { background: rgba(88,166,255,0.15); color: var(--info); }
+  .tag-dmr  { background: rgba(188,140,255,0.15); color: var(--purple); }
+  .tag-sniper { background: rgba(255,107,107,0.15); color: var(--danger); }
+  .tag-lmg  { background: rgba(63,185,80,0.15); color: var(--success); }
+  .tag-br   { background: rgba(255,140,66,0.15); color: #ff8c42; }
+  .tag-shotgun { background: rgba(255,180,100,0.15); color: #ffb464; }
+
+  .card-info {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  .card-info span { display: flex; align-items: center; gap: 4px; }
+
+  .code-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    margin-bottom: 8px;
+  }
+  .code-text {
+    flex: 1;
+    font-family: "SF Mono", "Fira Code", "Consolas", "Monaco", monospace;
+    font-size: 0.8rem;
+    color: var(--info);
+    word-break: break-all;
+    user-select: all;
+    letter-spacing: 0.5px;
+  }
+  .copy-btn {
+    padding: 6px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .copy-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .copy-btn.copied {
+    border-color: var(--success);
+    color: var(--success);
+    background: rgba(63,185,80,0.1);
+  }
+
+  .card-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .card-meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* --- Expired Card --- */
+  .gun-card.expired {
+    opacity: 0.45;
+    filter: grayscale(0.5);
+    border-color: rgba(255,107,107,0.25);
+  }
+  .gun-card.expired:hover { opacity: 0.7; }
+  .gun-card .expired-badge {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 3px 10px;
+    background: rgba(255,107,107,0.2);
+    border: 1px solid rgba(255,107,107,0.5);
+    border-radius: 12px;
+    color: var(--danger);
+    font-size: 0.7rem;
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .gun-card.expired .expired-badge { display: block; }
+  .gun-card .report-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-left: 4px;
+  }
+  .gun-card .report-btn:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: rgba(255,107,107,0.08);
+  }
+  .gun-card.expired .report-btn {
+    color: var(--success);
+  }
+  .gun-card.expired .report-btn:hover {
+    border-color: var(--success);
+    color: var(--success);
+    background: rgba(63,185,80,0.08);
+  }
+
+  .btn-toggle-expired {
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-primary);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-toggle-expired:hover { border-color: var(--danger); color: var(--danger); }
+  .btn-toggle-expired.active {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: rgba(255,107,107,0.08);
+  }
+  .btn-add {
+    background: var(--success);
+    color: #000;
+    font-weight: 700;
+  }
+  .btn-add:hover { background: #4cc961; }
+
+  /* --- Modal --- */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 16px;
+    overflow-y: auto;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+  }
+  .modal h3 { font-size: 1.15rem; margin-bottom: 20px; color: var(--text-primary); }
+  .modal label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    margin-top: 12px;
+  }
+  .modal input, .modal select, .modal textarea {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+    font-family: inherit;
+  }
+  .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--accent); }
+  .modal textarea { resize: vertical; min-height: 48px; }
+  .modal .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+  }
+  .modal .btn-cancel {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .modal .btn-cancel:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+  .modal .btn-save {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--accent);
+    color: #000;
+    border: none;
+  }
+  .modal .btn-save:hover { background: #f5c71a; }
+
+  .user-badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: rgba(63,185,80,0.15);
+    color: var(--success);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .card-meta .edit-btn, .card-meta .del-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    transition: all 0.15s;
+  }
+  .card-meta .edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .card-meta .del-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+  /* --- Empty State --- */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 12px; display: block; }
+  .empty-state p { font-size: 0.95rem; }
+
+  /* --- Toast --- */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    background: var(--bg-card);
+    border: 1px solid var(--success);
+    color: var(--success);
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+
+  /* --- Footer --- */
+  .footer {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .footer a { color: var(--text-secondary); text-decoration: none; }
+  .footer a:hover { color: var(--accent); }
+
+  /* --- Pagination --- */
+  .pagination-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+  }
+  .page-size-select {
+    padding: 8px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    outline: none;
+    cursor: pointer;
+  }
+  .page-size-select:focus { border-color: var(--accent); }
+  .page-size-select option { background: var(--bg-card); color: var(--text-primary); }
+  .page-info {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .page-btns {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .page-btn {
+    padding: 7px 13px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-width: 36px;
+    text-align: center;
+  }
+  .page-btn:hover:not(:disabled):not(.active) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .page-btn.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .page-ellipsis {
+    padding: 7px 6px;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.5rem; }
+    .gun-grid { grid-template-columns: 1fr; }
+    .controls { flex-direction: column; }
+    .stats-bar { gap: 16px; }
+    .tab { padding: 8px 14px; font-size: 0.8rem; }
+    .pagination-bar { flex-direction: column; align-items: stretch; }
+    .page-btns { justify-content: center; flex-wrap: wrap; }
+  }
+
+  /* --- Scrollbar --- */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #30363d; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <span class="header-icon">🎯</span>
+  <h1>三角洲行动 · 改枪码大全</h1>
+  <p class="subtitle">收录最新改枪方案，一键复制，直接导入游戏使用</p>
+  <span class="season-badge">⚡ S10 核子裂变 · 2026年7月</span>
+</header>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-value" id="totalGuns">0</div><div class="stat-label">收录方案</div></div>
+  <div class="stat-item"><div class="stat-value" id="totalCategories">10</div><div class="stat-label">枪械类型</div></div>
+  <div class="stat-item"><div class="stat-value">2026.07</div><div class="stat-label">数据更新</div></div>
+</div>
+
+<!-- Container -->
+<div class="container">
+
+  <!-- Tabs -->
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="all"><span class="emoji">📋</span>全部</button>
+    <button class="tab" data-tab="fenghuo"><span class="emoji">🔥</span>烽火地带</button>
+    <button class="tab" data-tab="streamer"><span class="emoji">⭐</span>主播同款</button>
+  </div>
+
+  <!-- Controls Row 1: Search + Filters -->
+  <div class="controls">
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" placeholder="搜索枪械名称、代号... （如 M7、AS Val、K416）" autocomplete="off">
+      <span class="search-icon">🔍</span>
+    </div>
+    <select class="filter-select" id="categoryFilter">
+      <option value="all">全部类型</option>
+      <option value="突击步枪">🔫 突击步枪</option>
+      <option value="冲锋枪">💨 冲锋枪</option>
+      <option value="战斗步枪">⚡ 战斗步枪</option>
+      <option value="射手步枪">🎯 射手步枪</option>
+      <option value="狙击步枪">🔭 狙击步枪</option>
+      <option value="轻机枪">💥 轻机枪</option>
+      <option value="紧凑步枪">🗡️ 紧凑步枪</option>
+      <option value="霰弹枪">🔧 霰弹枪</option>
+      <option value="手枪">🔫 手枪</option>
+      <option value="弓">🏹 弓</option>
+    </select>
+    <select class="filter-select" id="priceFilter">
+      <option value="all">全部价位</option>
+      <option value="budget">💰 经济型 (&lt;20万)</option>
+      <option value="mid">💰 中配 (20万~50万)</option>
+      <option value="high">💰 高配 (50万~80万)</option>
+      <option value="maxed">💰 满改/顶配</option>
+    </select>
+    <select class="filter-select" id="sortBy">
+      <option value="default">📋 默认排序</option>
+      <option value="price-asc">💰 价格从低到高</option>
+      <option value="price-desc">💰 价格从高到低</option>
+      <option value="name-asc">🔤 名称 A → Z</option>
+      <option value="name-desc">🔤 名称 Z → A</option>
+    </select>
+    <button class="btn-toggle-expired" id="toggleExpiredBtn" title="隐藏/显示已过期的改枪码">⏳ 隐藏过期</button>
+    <button class="btn btn-add" id="addBtn" title="自己添加新的改枪方案">➕ 添加方案</button>
+    <button class="btn btn-outline" id="resetBtn">🔄 重置</button>
+  </div>
+
+  <!-- Active Filters -->
+  <div class="active-filters" id="activeFilters">
+    <span class="result-count">共 <strong id="resultCount">0</strong> 个方案</span>
+  </div>
+
+  <!-- Gun Grid -->
+  <div class="gun-grid" id="gunGrid"></div>
+
+  <!-- Pagination -->
+  <div class="pagination-bar" id="paginationBar">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:0.82rem;color:var(--text-muted);">每页</span>
+      <select class="page-size-select" id="pageSizeSelect">
+        <option value="12">12 个</option>
+        <option value="24">24 个</option>
+        <option value="48">48 个</option>
+      </select>
+    </div>
+    <span class="page-info" id="pageInfo">第 1 页，共 1 页</span>
+    <div class="page-btns" id="pageBtns"></div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <span class="icon">🔍</span>
+    <p>没有找到匹配的改枪方案</p>
+    <p style="font-size:0.8rem;margin-top:4px;">试试其他关键词或筛选条件</p>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">➕ 添加改枪方案</h3>
+    <label>枪械名称 *</label>
+    <input type="text" id="modalName" placeholder="如 M7、AS Val、K416…" autocomplete="off">
+    <label>方案名称 *</label>
+    <input type="text" id="modalSub" placeholder="如 满改火控 (61W)" autocomplete="off">
+    <label>改枪码 *</label>
+    <input type="text" id="modalCode" placeholder="6开头的改枪码…" autocomplete="off">
+    <div style="display:flex;gap:12px;">
+      <div style="flex:1;"><label>类型</label>
+        <select id="modalCategory">
+          <option value="突击步枪">突击步枪</option><option value="冲锋枪">冲锋枪</option><option value="战斗步枪">战斗步枪</option><option value="射手步枪">射手步枪</option><option value="狙击步枪">狙击步枪</option><option value="轻机枪">轻机枪</option><option value="紧凑步枪">紧凑步枪</option><option value="霰弹枪">霰弹枪</option><option value="手枪">手枪</option><option value="弓">弓</option>
+        </select>
+      </div>
+      <div style="flex:1;"><label>分类标签</label>
+        <select id="modalTab">
+          <option value="fenghuo">🔥 烽火地带</option><option value="streamer">⭐ 主播同款</option>
+        </select>
+      </div>
+    </div>
+    <label>价格/档位</label>
+    <input type="text" id="modalCost" placeholder="如 32万、满改、中配、~55万…" autocomplete="off">
+    <label>描述</label>
+    <textarea id="modalDesc" placeholder="一句话描述这个配置的特点…" autocomplete="off"></textarea>
+    <div class="btn-row">
+      <button class="btn-cancel" id="modalCancel">取消</button>
+      <button class="btn-save" id="modalSave">💾 保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">✅ 改枪码已复制到剪贴板</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>改枪码来自社区整理，实际效果请以游戏内为准 · S10 核子裂变赛季</p>
+  <p style="margin-top:4px;">使用方法：仓库 → 枪械工坊 → 选择枪械 → 导入配装 → 粘贴代码</p>
+  <p style="margin-top:4px;color:var(--text-muted);font-size:0.7rem;">快捷键：<kbd style="padding:1px 6px;border:1px solid var(--border);border-radius:3px;">Ctrl+K</kbd> 搜索 &nbsp; <kbd style="padding:1px 6px;border:1px solid var(--border);border-radius:3px;">Ctrl+R</kbd> 重置 &nbsp; <kbd style="padding:1px 6px;border:1px solid var(--border);border-radius:3px;">Esc</kbd> 关闭弹窗 &nbsp; 点击 <span style="color:var(--success)">➕ 添加方案</span> 自己录入新码</p>
+</footer>
+
+<script>
+// ─── Parse price to numeric value for sorting ───
+// "12万" → 120000, "~55万" → 550000, "满改"/"满配" → 999999, "中配" → 500000
+function parsePrice(cost) {
+  const cleaned = cost.replace(/[~≈]/g, '').trim();
+  if (cleaned === '满改' || cleaned === '满配') return 999999;
+  if (cleaned === '中配') return 500000;
+  const match = cleaned.match(/^(\d+)万$/);
+  if (match) return parseInt(match[1]) * 10000;
+  return 0;
+}
+
+// ─── Get price tier label ───
+function getPriceTier(cost) {
+  const price = parsePrice(cost);
+  if (price >= 900000) return '满改/顶配';
+  if (price >= 500000) return '高配';
+  if (price >= 200000) return '中配';
+  return '经济型';
+}
+
+// ─── Data ───
+const guns = [
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 突击步枪
+  // ═══════════════════════════════════════════
+  { name: "AS Val", sub: "近战T0顶配 (S10)", code: "6JPHD780AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "瞬开镜稳压，高端局近战猛攻" },
+  { name: "AS Val", sub: "常规满改", code: "6GTVU05049H3TLFOHMKH0", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "均衡配置，新手友好" },
+  { name: "AS Val", sub: "混合满改（机动拉满）", code: "6GTVUK8049H3TLFOHMKH0", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "机动性拉满，游走突袭" },
+  { name: "AS Val", sub: "MRGS托满改（稳如泰山）", code: "6GTVUT0049H3TLFOHMKH0", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "后坐控制极佳，持续压制" },
+  { name: "AS Val", sub: "S9猛攻版 (56W)", code: "6H51FIC0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "56万", desc: "满改激光，秒开镜" },
+  { name: "AS Val", sub: "S9猛攻版二", code: "6JT7PGC0D69M54S2KHIUU", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季猛攻配置" },
+
+  { name: "K416", sub: "半改均衡之选", code: "6IUQAR4081SNL6KO8PQSD", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "秒五级甲0.3秒，万金油" },
+  { name: "K416", sub: "S10性价比 (33W)", code: "6KA8KIS04IEPU59LBE3HQ", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "S10赛季高性价比半改" },
+  { name: "K416", sub: "S9满改版", code: "6JQ44580AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季满改配置" },
+  { name: "K416", sub: "45发满改无后座", code: "6H53U540E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "45发弹匣+无后座激光枪" },
+  { name: "K416", sub: "红点满改 (57W)", code: "6H5FOJ08FOTQMS6R8DC1B", category: "突击步枪", tab: "fenghuo", cost: "57万", desc: "红点高配满改" },
+  { name: "K416", sub: "三倍满改 (60W)", code: "6H5FOJ08FOTQMS6R8DC1B", category: "突击步枪", tab: "fenghuo", cost: "60万", desc: "三倍镜高配满改" },
+
+  { name: "KC17", sub: "顶配满改 (S10)", code: "6KI9V9C0EU90O684D8QL5", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S10版本强势突击步枪" },
+  { name: "KC17", sub: "S9满改版", code: "6JQ4JV00AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季满改" },
+  { name: "KC17", sub: "S9 3倍满改", code: "6H51DO00E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "3倍镜满改配置" },
+
+  { name: "RM277", sub: "作战顶配 (S10新枪)", code: "6KFCU2K0C2C56U6BB8FNO", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "长弓高点架人专用" },
+  { name: "RM277", sub: "中远程高操控", code: "6KFM2MO0B0GKDDOTE9T6Q", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "中远程高操控性配置" },
+
+  { name: "M4A1", sub: "丐版入门 (16W)", code: "6HAUEC40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "16万", desc: "最丐配置，新手过渡" },
+  { name: "M4A1", sub: "低配堆后坐力 (19W)", code: "6ILQHV8093H1HNC6QM36G", category: "突击步枪", tab: "fenghuo", cost: "19万", desc: "入门低配，堆后坐力控制" },
+  { name: "M4A1", sub: "红点无后座 (30W)", code: "6HAUEDC0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "红点镜+无后座配置" },
+  { name: "M4A1", sub: "红点中配版 (33W)", code: "6G1TNAK0DU4H1OH60MG1R", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "红点+中配均衡" },
+  { name: "M4A1", sub: "中配均衡 (33W)", code: "6ILQVDG093H1HNC6QM36G", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "堡垒水平+三角握把" },
+  { name: "M4A1", sub: "1.5倍镜激光半改 (35W)", code: "6HAUEBC0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "1.5倍镜+激光，半改好选择" },
+  { name: "M4A1", sub: "高配满改 (46W)", code: "6ILQQ3G093H1HNC6QM36G", category: "突击步枪", tab: "fenghuo", cost: "46万", desc: "堡垒+密令握把，顶级配置" },
+  { name: "M4A1", sub: "满改红点 (48W)", code: "6HAUEAO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "满改红点，S9经典" },
+  { name: "M4A1", sub: "满改火控 (50W)", code: "6HAUECO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "50W满改火控" },
+  { name: "M4A1", sub: "满改48W版", code: "6H4NQ8C0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "S9赛季满改" },
+
+  { name: "AKM", sub: "青春版 (19W)", code: "6HAUE8040E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "19万", desc: "入门级AKM配置" },
+  { name: "AKM", sub: "18W无后座", code: "6H53UHO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "18万", desc: "18W便宜无后座" },
+  { name: "AKM", sub: "半改 (32W)", code: "6HAUE8K0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "中配半改" },
+  { name: "AKM", sub: "无后座中配版 (35W)", code: "6GJ2OSO08Q3HTONBI029R", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "无后座中配，激光枪手感" },
+  { name: "AKM", sub: "满改火控 (48W)", code: "6HAUE9C0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "满改火控顶配" },
+
+  { name: "腾龙", sub: "青春版 (17W)", code: "6HAUEG40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "17万", desc: "丐版入门" },
+  { name: "腾龙", sub: "满改高速导气 (50W)", code: "6H4H3U80E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "S9赛季满改" },
+  { name: "腾龙", sub: "半改高速导气 (45W)", code: "6H51E2K0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "45万", desc: "45W半改高速导气" },
+
+  { name: "AK-12", sub: "青春版 (17W)", code: "6HAUEM40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "17万", desc: "丐版入门配置" },
+  { name: "AK-12", sub: "满改腰射 (43W)", code: "6HAUEMO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "43万", desc: "腰射流满改" },
+  { name: "AK-12", sub: "满改火控 (54W)", code: "6HAUEN40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "54万", desc: "火控满改顶配" },
+  { name: "AK-12", sub: "超绝满改 (59W)", code: "6H51JSG0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "59万", desc: "S9超绝满改" },
+
+  { name: "K437", sub: "青春版 (26W)", code: "6HAUEJO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "26万", desc: "入门丐版" },
+  { name: "K437", sub: "半改 (42W)", code: "6HAUEK80E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "42万", desc: "中配半改" },
+  { name: "K437", sub: "高配无后座 (48W)", code: "6G02CLK04QRQQL6OOBF6G", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "高配无后座激光枪" },
+  { name: "K437", sub: "满改红点 (50W)", code: "6HAUEK40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "红点满改" },
+  { name: "K437", sub: "满改版40W", code: "6G8BKB40C94UI3U80V1NH", category: "突击步枪", tab: "fenghuo", cost: "40万", desc: "40W性价比满改" },
+  { name: "K437", sub: "满改火控 (60W)", code: "6HAUEK40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "60万", desc: "火控顶配满改" },
+
+  { name: "AUG", sub: "青春版 (19W)", code: "6HAUEL40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "19万", desc: "入门丐版" },
+  { name: "AUG", sub: "33W满改", code: "6H51SL80E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "性价比满改" },
+  { name: "AUG", sub: "半改 (38W)", code: "6HAUEM00E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "38万", desc: "中配半改" },
+  { name: "AUG", sub: "黑夜无后座消音版 (39W)", code: "6G0K9AC04QRQQL6OOBF6G", category: "突击步枪", tab: "fenghuo", cost: "39万", desc: "消音+无后座，黑夜战神" },
+  { name: "AUG", sub: "满改三倍 (50W)", code: "6HAUEM40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "三倍镜满改" },
+
+  { name: "SG552", sub: "丐版 (10W)", code: "6HAUEP00E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "10万", desc: "最丐入门枪" },
+  { name: "SG552", sub: "满改版 (43W)", code: "6H4CSLG0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "43万", desc: "S9赛季满改" },
+
+  { name: "MK47", sub: "稳版", code: "6JQ3P140AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "高稳定性版本" },
+  { name: "MK47", sub: "近点高伤版", code: "6JT7PMC0D69M54S2KHIUU", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "近点高伤害配置" },
+
+  { name: "AR57", sub: "满改全面版 (S9新晋T0)", code: "6JQ48580AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "S9新晋T0，全面均衡" },
+
+  { name: "QBZ95-1", sub: "青春版 (18W)", code: "6HAUENO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "18万", desc: "丐版入门" },
+  { name: "QBZ95-1", sub: "30W满改三倍", code: "6H53UCO0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "三倍镜满改性价比" },
+  { name: "QBZ95-1", sub: "满改 (37W)", code: "6HAUEO40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "37万", desc: "满改配置" },
+
+  { name: "MCX LT", sub: "丐版入门 (12W)", code: "6IV6SLG03GFRB8J9CH4VL", category: "突击步枪", tab: "fenghuo", cost: "12万", desc: "最丐MCX，普坝过渡" },
+  { name: "MCX LT", sub: "丐版 (14W)", code: "6ITSQUS085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "14万", desc: "配件极简，新手练枪首选" },
+  { name: "MCX LT", sub: "丐版通用码 (17W)", code: "6IVE4QS0AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "17万", desc: "丐版通用配置" },
+  { name: "MCX LT", sub: "枪管半改 (20W)", code: "6IV6SPG03GFRB8J9CH4VL", category: "突击步枪", tab: "fenghuo", cost: "20万", desc: "20W枪管半改" },
+  { name: "MCX LT", sub: "腰射版 (21W)", code: "6IVOOCC074EP52HKUGIIC", category: "突击步枪", tab: "fenghuo", cost: "21万", desc: "21W腰射入门" },
+  { name: "MCX LT", sub: "丐版 (22W)", code: "6J136VK085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "22万", desc: "22W丐版配置" },
+  { name: "MCX LT", sub: "性价比版 (23W)", code: "6IVOV080ADPIIA9D8B1Q8", category: "突击步枪", tab: "fenghuo", cost: "23万", desc: "23W高性价比" },
+  { name: "MCX LT", sub: "性价比版 (24W)", code: "6J135G0085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "24万", desc: "后座67，平民首选" },
+  { name: "MCX LT", sub: "半改 (26W)", code: "6IUL67O0AJRE0ID6PL8GU", category: "突击步枪", tab: "fenghuo", cost: "26万", desc: "26W半改均衡" },
+  { name: "MCX LT", sub: "高伤害版 (26W)", code: "6IVOPP4074EP52HKUGIIC", category: "突击步枪", tab: "fenghuo", cost: "26万", desc: "26W高伤害配置" },
+  { name: "MCX LT", sub: "灵活半改 (29W)", code: "6J05KQ005626H7V45IC7J", category: "突击步枪", tab: "fenghuo", cost: "29万", desc: "操控92，开镜极快" },
+  { name: "MCX LT", sub: "极致性价比 (30W)", code: "6JCLU4005MEBDRSRO17QC", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "30W极致性价比" },
+  { name: "MCX LT", sub: "半改通用码 (30W)", code: "6IVE83K0AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改通用配置" },
+  { name: "MCX LT", sub: "双修版 (31W)", code: "6JCLF5O0046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "31万", desc: "31W腰射操控双修" },
+  { name: "MCX LT", sub: "大弹夹版 (32W)", code: "6JCLVEG05MEBDRSRO17QC", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "32W大弹夹" },
+  { name: "MCX LT", sub: "半改 (33W)", code: "6J137C0085N96GKA2CU5U", category: "突击步枪", tab: "fenghuo", cost: "33万", desc: "后座79，射程39m" },
+  { name: "MCX LT", sub: "青春版 (35W)", code: "6JCL6VO0046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "35W小满改，射速870" },
+  { name: "MCX LT", sub: "小满改 (39W)", code: "6JCL9740046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "39万", desc: "39W满改，后座78" },
+  { name: "MCX LT", sub: "满改 (41W)", code: "6JCM13S05MEBDRSRO17QC", category: "突击步枪", tab: "fenghuo", cost: "41万", desc: "41W满改配置" },
+  { name: "MCX LT", sub: "大满改 (42W)", code: "6IV6SS003GFRB8J9CH4VL", category: "突击步枪", tab: "fenghuo", cost: "42万", desc: "42W大满改" },
+  { name: "MCX LT", sub: "满改 (44W)", code: "6JCLER80046KSSI0SPPN2", category: "突击步枪", tab: "fenghuo", cost: "44万", desc: "60发弹匣+后座78+射速870" },
+  { name: "MCX LT", sub: "满改 (47W)", code: "6IUL64G0AJRE0ID6PL8GU", category: "突击步枪", tab: "fenghuo", cost: "47万", desc: "47W满改顶配" },
+  { name: "MCX LT", sub: "满改通用码 (48W)", code: "6IVEA280AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "48万", desc: "满改通用配置" },
+  { name: "MCX LT", sub: "满改 (50W)", code: "6KBGNOS0DVV2IQEKG70I3", category: "突击步枪", tab: "fenghuo", cost: "50万", desc: "焰魂枪管+隔热外套，30m内激光" },
+  { name: "MCX LT", sub: "林树同款 (52W)⭐", code: "6J137P0085N96GKA2CU5U", category: "突击步枪", tab: "streamer", cost: "52万", desc: "🔥 林树同款！爆头68，60发弹匣" },
+  { name: "MCX LT", sub: "满改二倍镜 (53W)", code: "6IVOSN80ADPIIA9D8B1Q8", category: "突击步枪", tab: "fenghuo", cost: "53万", desc: "53W满改二倍镜" },
+  { name: "MCX LT", sub: "腰倍双修 (55W)", code: "6IVOS2G0ADPIIA9D8B1Q8", category: "突击步枪", tab: "fenghuo", cost: "55万", desc: "55W腰射+倍镜双修" },
+  { name: "MCX LT", sub: "激光版", code: "6IVE97S0AO21USGQ8AC2S", category: "突击步枪", tab: "fenghuo", cost: "满改", desc: "激光精准版" },
+  { name: "MCX LT", sub: "金枪客任务版", code: "6IVOP0G074EP52HKUGIIC", category: "突击步枪", tab: "gold", cost: "满改", desc: "MCX金枪客五任务专用" },
+
+  // ═══════════════════════════════════════════
+  // 📡 MCX LT — 全面战场系列
+  // ═══════════════════════════════════════════
+  { name: "MCX LT", sub: "战场长管操控版", code: "6J0F6240FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "中近距长管操控" },
+  { name: "MCX LT", sub: "战场长管稳定版", code: "6J0F7G00FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "百米稳定长管" },
+  { name: "MCX LT", sub: "战场长管收割版", code: "6J0F8R00FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "长管收割配置" },
+  { name: "MCX LT", sub: "战场短管冲锋版", code: "6J0FF6C0FCDV4UPACJK76", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "短管冲锋枪手感" },
+  { name: "MCX LT", sub: "战场30发正常射速", code: "6JA8ETS0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "正常射速30发" },
+  { name: "MCX LT", sub: "战场45发正常射速", code: "6JA8F9G0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "正常射速45发" },
+  { name: "MCX LT", sub: "战场60发正常射速", code: "6JA8FDC0F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "正常射速60发" },
+  { name: "MCX LT", sub: "战场45发高射速", code: "6JA8FG80F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "高射速45发" },
+  { name: "MCX LT", sub: "战场60发高射速", code: "6JA8FL00F70K3QGDV1T2K", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "高射速60发" },
+
+  { name: "CAR-15", sub: "青春版 (9W)", code: "6HAUJD40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "9万", desc: "最便宜入门选择" },
+
+  { name: "M16A4", sub: "青春版 (20W)", code: "6HAUJFC0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "20万", desc: "入门丐版" },
+  { name: "M16A4", sub: "腰射版 (32W)", code: "6HAUJG80E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "32万", desc: "腰射流配置" },
+  { name: "M16A4", sub: "三倍镜版 (36W)", code: "6HAUJG40E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "36万", desc: "三倍镜中距" },
+
+  { name: "PTR-32", sub: "青春版 (9W)", code: "6HAUJ4S0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "9万", desc: "丐版入门" },
+  { name: "PTR-32", sub: "半改 (27W)", code: "6HAUJ5G0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "27万", desc: "中配半改" },
+  { name: "PTR-32", sub: "满改 (45W)", code: "6HAUJ5C0E5QUTQP36HK9K", category: "突击步枪", tab: "fenghuo", cost: "45万", desc: "满改配置" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 战斗步枪
+  // ═══════════════════════════════════════════
+  { name: "M7", sub: "全距T0全能版 (S10)", code: "6JQJDAK0BAC7RIM3B0293", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "FFC双流制退器+堤风长枪管+CT枪托+3倍可调镜" },
+  { name: "M7", sub: "消音隐身版", code: "6JQJDMS0BAC7RIM3B0293", category: "战斗步枪", tab: "fenghuo", cost: "满配", desc: "专属消音器+轻量化枪托，老六蹲点" },
+  { name: "M7", sub: "近战速攻红点版", code: "6H52M5K0FOTQMS6R8DC1B", category: "战斗步枪", tab: "fenghuo", cost: "满配", desc: "沙暴补偿器+UR短托+红点，25米贴脸" },
+  { name: "M7", sub: "丐版写版 (22W)", code: "6FR888K04QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "22万", desc: "丐版入门，体验M7手感" },
+  { name: "M7", sub: "中配版 (39W)", code: "6FR88A804QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "39万", desc: "中配均衡性价比" },
+  { name: "M7", sub: "极致稳定版 (58W)", code: "6FR88C004QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "58万", desc: "极致稳定激光枪" },
+  { name: "M7", sub: "火控版 (61W)", code: "6FR88B404QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "61万", desc: "火控顶配" },
+  { name: "M7", sub: "S9全距最优版", code: "6JPHJ700AO21USGQ8AC2S", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季中远最优" },
+  { name: "M7", sub: "满改红点版", code: "6H5LNCG0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "红点满改M7" },
+  { name: "M7", sub: "59W二倍镜", code: "6H5DUD80E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "59万", desc: "二倍镜高配" },
+  { name: "M7", sub: "全能双流CT满配", code: "6JQJDAK0BAC7RIM3B0293", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "FFC双流制退器+堤风长管+CT特种枪托+3倍可调镜" },
+
+  { name: "SCAR-H", sub: "丐版 (16W)", code: "6HAMQ6S0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "16万", desc: "入门丐版配置" },
+  { name: "SCAR-H", sub: "半改激光枪 (28W)", code: "6HAMQ5O0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "28万", desc: "半改激光枪手感" },
+  { name: "SCAR-H", sub: "红点无敌稳定 (35W)", code: "6HAMQ2O0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "35万", desc: "红点无敌稳定，性价比高" },
+  { name: "SCAR-H", sub: "均衡三倍镜 (46W)", code: "6HAMQ3C0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "46万", desc: "三倍镜均衡配置" },
+  { name: "SCAR-H", sub: "满改猛攻流 (50W)", code: "6HAMQ3K0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "50万", desc: "猛攻流满改" },
+  { name: "SCAR-H", sub: "满改红点+消音 (55W)", code: "6HAMQ480E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "55万", desc: "红点镜+消音，高配" },
+
+  { name: "G3", sub: "穷哥福利满改 (37W)", code: "6JANNO80AO21USGQ8AC2S", category: "战斗步枪", tab: "fenghuo", cost: "37万", desc: "两枪秒头，性价比极高" },
+  { name: "G3", sub: "21W大弹鼓", code: "6H51FNO0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "21万", desc: "大弹鼓经济版" },
+
+  { name: "ASh-12", sub: "满改腰射 (41W)", code: "6HAUJ0C0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "41万", desc: "腰射流满改" },
+  { name: "ASh-12", sub: "满改红点 (52W)", code: "6HAUJ0O0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "52万", desc: "红点满改" },
+  { name: "ASh-12", sub: "满改二倍 (52W)", code: "6HAUJ0S0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "52万", desc: "二倍镜满改" },
+  { name: "ASh-12", sub: "高配猛攻版 (57W)", code: "6GENQT404QRQQL6OOBF6G", category: "战斗步枪", tab: "fenghuo", cost: "57万", desc: "猛攻流高配" },
+  { name: "ASh-12", sub: "满改版 (60W)", code: "6H51JOG0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "60万", desc: "S9满改60W" },
+
+  { name: "AKS-74U", sub: "青春版 (9W)", code: "6HAUJ9G0E5QUTQP36HK9K", category: "战斗步枪", tab: "fenghuo", cost: "9万", desc: "最丐选择" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 冲锋枪
+  // ═══════════════════════════════════════════
+  { name: "SMG-45", sub: "新手近战攻楼 (12W)", code: "6JBTJ38085N96GKA2CU5U", category: "冲锋枪", tab: "fenghuo", cost: "12万", desc: "三枪碎五级甲，成型便宜" },
+  { name: "SMG-45", sub: "S10性价比", code: "6KJEJ1K0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
+  { name: "SMG-45", sub: "满改三倍 (43W)", code: "6HAUJ2C0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "43万", desc: "三倍镜满改" },
+  { name: "SMG-45", sub: "30W腰射满改", code: "6H53VCS0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "30万", desc: "腰射流满改" },
+
+  { name: "MP5", sub: "青春版腰射 (9W)", code: "6HAUJA80E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "9万", desc: "丐版腰射入门" },
+  { name: "MP5", sub: "满改腰射 (16W)", code: "6HAUJAC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "16万", desc: "满改腰射性价比" },
+  { name: "MP5", sub: "S10性价比", code: "6KJF9RC0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
+  { name: "MP5", sub: "35W三爆闪", code: "6H5LR980E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "35万", desc: "三爆闪配置" },
+
+  { name: "MP7", sub: "S10性价比", code: "6FV0IMO0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "32万", desc: "近战冲锋高性价比" },
+  { name: "MP7", sub: "青春版腰射 (24W)", code: "6HAUJ5S0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "24万", desc: "腰射入门" },
+  { name: "MP7", sub: "全能版 (50W)", code: "6HAUJ740E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "50万", desc: "全能配置" },
+  { name: "MP7", sub: "满改腰射 (61W)", code: "6HAUJ740E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "61万", desc: "腰射顶配" },
+  { name: "MP7", sub: "满改开镜 (63W)", code: "6HAUJ780E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "63万", desc: "开镜流顶配" },
+  { name: "MP7", sub: "S9腰射满改", code: "6JQ5VBS0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "满改", desc: "S9赛季腰射满改" },
+  { name: "MP7", sub: "50W满改", code: "6H53V040E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "50万", desc: "S9赛季满改" },
+
+  { name: "P90", sub: "青春版 (16W)", code: "6HAUJBO0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "16万", desc: "丐版入门" },
+  { name: "P90", sub: "性价比带腰射 (18W)", code: "6HAUNLC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "18万", desc: "18W性价比腰射" },
+  { name: "P90", sub: "近战猛攻版 (24W)", code: "6FQUIM404QRQQL600BF6G", category: "冲锋枪", tab: "fenghuo", cost: "24万", desc: "近战猛攻利器" },
+  { name: "P90", sub: "S10性价比", code: "6KJF8N40AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
+  { name: "P90", sub: "满改 (42W)", code: "6HAUJC40E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "42万", desc: "满改配置" },
+  { name: "P90", sub: "满改+消音 (45W)", code: "6HAUNM80E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "45万", desc: "满改消音版" },
+
+  { name: "Vector", sub: "腰射版 (26W)", code: "6HAUNES0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "26万", desc: "腰射入门" },
+  { name: "Vector", sub: "腰射中配版 (29W)", code: "6GOFEC8032SF8AON69MFA", category: "冲锋枪", tab: "fenghuo", cost: "29万", desc: "腰射中配" },
+  { name: "Vector", sub: "28W腰射（绝密巴克什）", code: "6HAUNF00E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "28万", desc: "绝密巴克什腰射" },
+  { name: "Vector", sub: "开镜版 (44W)", code: "6HAUNEO0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "44万", desc: "开镜流配置" },
+  { name: "Vector", sub: "45W腰射（绝密航天）", code: "6HAUNEC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "45万", desc: "绝密航天腰射配置" },
+  { name: "Vector", sub: "58W开镜流", code: "6HAUNDS0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "58万", desc: "开镜流顶配" },
+
+  { name: "SR-3M", sub: "青春版 (13W)", code: "6HAUJ9O0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "13万", desc: "丐版入门" },
+  { name: "SR-3M", sub: "均衡配置", code: "6GT7B0O0EQLEKU76LK98G", category: "冲锋枪", tab: "fenghuo", cost: "满改", desc: "均衡冲锋枪配置" },
+  { name: "SR-3M", sub: "半改 (30W)", code: "6HAUJA00E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "30万", desc: "中配半改" },
+  { name: "SR-3M", sub: "极致腰射 (46W)", code: "6G1JJPK0FIAS4OUQQ081T", category: "冲锋枪", tab: "fenghuo", cost: "46万", desc: "极致腰射配置" },
+  { name: "SR-3M", sub: "极致腰射", code: "6GT7AKO0EQLEKU76LK98G", category: "冲锋枪", tab: "fenghuo", cost: "满改", desc: "腰射精准度拉满" },
+  { name: "SR-3M", sub: "满改腰射 (48W)", code: "6HAUJ9G0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "48万", desc: "满改腰射" },
+  { name: "SR-3M", sub: "S9满改", code: "6JQ6AK80AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "满改", desc: "S9赛季满改" },
+  { name: "SR-3M", sub: "全能版 (63W)", code: "6HAUJ9S0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "63万", desc: "全能顶配" },
+  { name: "SR-3M", sub: "69W轮椅满改", code: "6H5LQRC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "69万", desc: "轮椅满改" },
+  { name: "SR-3M", sub: "S10性价比", code: "6KJEAPK0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
+
+  { name: "QCQ171", sub: "S10性价比", code: "6KJDJGO0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
+  { name: "QCQ171", sub: "49W满改", code: "6H5LQHS0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "49万", desc: "S9赛季满改" },
+
+  { name: "勇士", sub: "S10性价比", code: "6KJE8PK0AO21USGQ8AC2S", category: "冲锋枪", tab: "fenghuo", cost: "中配", desc: "S10赛季性价比版" },
+  { name: "勇士", sub: "45W红点", code: "6H53VBO0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "45万", desc: "红点满改" },
+
+  { name: "UZI", sub: "丐版 (12W)", code: "6HAUJBE0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "12万", desc: "丐版冲锋枪" },
+  { name: "UZI", sub: "11W满改", code: "6H5LR180E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "11万", desc: "超便宜满改" },
+
+  { name: "野牛", sub: "丐版 (8W)", code: "6HAUJBC0E5QUTQP36HK9K", category: "冲锋枪", tab: "fenghuo", cost: "8万", desc: "最丐冲锋枪" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 射手步枪
+  // ═══════════════════════════════════════════
+  { name: "M14", sub: "影袭中距配置", code: "6H6I8A00EU90068408QL5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "经典影袭配置，中距压制" },
+  { name: "M14", sub: "EBR远距高稳", code: "6H6I8G00EU90068408QL5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "经典EBR配置，远距高稳定性" },
+  { name: "M14", sub: "共二机动版", code: "6H6I8KC0EU90068408QL5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "高操控性，灵活扫射" },
+  { name: "M14", sub: "半改 (44W)", code: "6HAUJS40E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "44万", desc: "半改中配" },
+  { name: "M14", sub: "高配猛攻版 (59W)", code: "6GC2JNG04QRQQL6OOBF6G", category: "射手步枪", tab: "fenghuo", cost: "59万", desc: "猛攻流高配" },
+  { name: "M14", sub: "S9中远版", code: "6JQ3NTO0AO21USGQ8AC2S", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "S9中远最优" },
+
+  { name: "SVCH", sub: "狙击T0满改 (S10新枪)", code: "6KHPO1G0AO21USGQ8AC2S", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "高伤高穿，远距离收割" },
+  { name: "SVCH", sub: "满改红点推荐", code: "6KFCGHO08QMG6NRUK6UQC", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "红点镜满改，精准打击" },
+
+  { name: "SR-25", sub: "半改 (~30W)", code: "6HAUJRC0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "30万", desc: "中配半改" },
+  { name: "SR-25", sub: "满改 (62W)", code: "6HAUJR80E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "62万", desc: "满改顶配" },
+
+  { name: "PSG-1", sub: "青春版 (26W)", code: "6HAUJQC0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "26万", desc: "入门丐版" },
+  { name: "PSG-1", sub: "满改 (52W)", code: "6HAUJQO0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "52万", desc: "满改配置" },
+
+  { name: "SVD", sub: "满改版 (58W)", code: "6HAUJQS0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "58万", desc: "满改顶配" },
+  { name: "SVD", sub: "51W满改", code: "6H2SFFC0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "51万", desc: "S9赛季满改" },
+
+  { name: "VSS", sub: "满改 (35W)", code: "6HAUJRG0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "35万", desc: "VSS满改配置" },
+
+  { name: "SKS", sub: "丐版 (15W)", code: "6HAUJQ80E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "15万", desc: "丐版入门" },
+  { name: "SKS", sub: "满改 (53W)", code: "6HAUJQ40E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "53万", desc: "满改配置" },
+
+  { name: "MINI14", sub: "半改 (22W)", code: "6HAUJP80E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "22万", desc: "半改中配" },
+  { name: "MINI14", sub: "满改 (42W)", code: "6HAUJPC0E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "42万", desc: "满改配置" },
+
+  { name: "SR9", sub: "满改 (36W)", code: "6HAUJO80E5QUTQP36HK9K", category: "射手步枪", tab: "fenghuo", cost: "36万", desc: "满改配置" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 狙击步枪
+  // ═══════════════════════════════════════════
+  { name: "AWM", sub: "S9断档T0", code: "6JPHC500AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9赛季断档T0大狙" },
+  { name: "AWM", sub: "满改版", code: "6H5LRB80E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "59万", desc: "满改顶配" },
+
+  { name: "巴雷特 M82", sub: "中距架点T0", code: "6JPH8KG0AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9中距架点T0" },
+
+  { name: "R93", sub: "丐版 (15W)", code: "6HAUJLO0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "15万", desc: "丐版入门" },
+  { name: "R93", sub: "S10性价比 (28W)", code: "6KJG5MO0AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "28万", desc: "S10赛季高性价比" },
+  { name: "R93", sub: "S9满改版", code: "6H5LRFC0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9满改配置" },
+
+  { name: "M700", sub: "丐版 (28W)", code: "6HAUJM40E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "28万", desc: "丐版入门" },
+  { name: "M700", sub: "中配 (41W)", code: "6HAUJMC0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "41万", desc: "中配半改" },
+  { name: "M700", sub: "满改 (49W)", code: "6HAUJM80E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "49万", desc: "满改配置" },
+
+  { name: "SV-98", sub: "丐版 (23W)", code: "6HAUJLO0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "23万", desc: "丐版入门" },
+  { name: "SV-98", sub: "S10性价比 (29W)", code: "6KJG6RO0AO21USGQ8AC2S", category: "狙击步枪", tab: "fenghuo", cost: "29万", desc: "S10赛季高性价比" },
+  { name: "SV-98", sub: "S9满改版", code: "6H5406K0E5QUTQP36HK9K", category: "狙击步枪", tab: "fenghuo", cost: "满改", desc: "S9满改配置" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 轻机枪
+  // ═══════════════════════════════════════════
+  { name: "M250", sub: "青春版 (28W)", code: "6HAUJKO0E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "28万", desc: "入门丐版" },
+  { name: "M250", sub: "半改 (45W)", code: "6HAUJL40E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "45万", desc: "中配半改" },
+  { name: "M250", sub: "满改 (62W)", code: "6HAUJL80E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "62万", desc: "满改顶配" },
+  { name: "M250", sub: "S9清图版", code: "6JPHQ640AO21USGQ8AC2S", category: "轻机枪", tab: "fenghuo", cost: "满改", desc: "S9清图利器" },
+
+  { name: "M249", sub: "青春版 (17W)", code: "6HAUJK80E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "17万", desc: "丐版入门" },
+  { name: "M249", sub: "半改 (31W)", code: "6HAUJKG0E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "31万", desc: "中配半改" },
+  { name: "M249", sub: "满改 (45W)", code: "6HAUJKC0E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "45万", desc: "满改配置" },
+
+  { name: "PKM", sub: "青春版 (22W)", code: "6HAUJIO0E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "22万", desc: "入门丐版" },
+  { name: "PKM", sub: "半改 (31W)", code: "6HAUJJ40E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "31万", desc: "中配半改" },
+  { name: "PKM", sub: "满改三倍 (55W)", code: "6HAUJJ80E5QUTQP36HK9K", category: "轻机枪", tab: "fenghuo", cost: "55万", desc: "三倍镜满改" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 霰弹枪
+  // ═══════════════════════════════════════════
+  { name: "S12K", sub: "满腰射 (12W)", code: "6HAUOA80E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "12万", desc: "满改腰射霰弹枪" },
+  { name: "S12K", sub: "爆闪满腰射 (15W)", code: "6HAUOBC0E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "15万", desc: "爆闪+满腰射" },
+
+  { name: "M1014", sub: "满改 (26W)", code: "6HAUOC40E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "26万", desc: "满改半自动霰弹枪" },
+
+  { name: "725", sub: "腰射喷 (10W)", code: "6HAUOD40E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "10万", desc: "腰射喷入门" },
+  { name: "725", sub: "开镜喷 (19W)", code: "6HAUOD80E5QUTQP36HK9K", category: "霰弹枪", tab: "fenghuo", cost: "19万", desc: "开镜流配置" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 手枪
+  // ═══════════════════════════════════════════
+  { name: "G18", sub: "满改 (10W)", code: "6HAUOE40E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "10万", desc: "全自动手枪满改" },
+  { name: "沙鹰", sub: "满改 (6W)", code: "6HAUOF40E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "6万", desc: "沙鹰满改" },
+  { name: "93R", sub: "满改 (12W)", code: "6HAUOG40E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "12万", desc: "三连发手枪满改" },
+  { name: "左轮", sub: "腰射版 (26W)", code: "6HAUOF80E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "26万", desc: "腰射流左轮" },
+  { name: "左轮", sub: "开镜版 (28W)", code: "6HAUOFC0E5QUTQP36HK9K", category: "手枪", tab: "fenghuo", cost: "28万", desc: "开镜流左轮" },
+
+  // ═══════════════════════════════════════════
+  // ⚔️ 全面战场
+  // ═══════════════════════════════════════════
+  { name: "K416", sub: "新手稳定版", code: "6KIPN4K087KKF9T2HJCH4", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "稳定性优先，适合新手" },
+  { name: "K416", sub: "进阶操控版", code: "6KIPN64087KKF9T2HJCH4", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "操控性增强，进阶玩家首选" },
+  { name: "AKM", sub: "职业同款", code: "6KIOL8K02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "职业选手同款配置" },
+  { name: "AKM", sub: "三枪带走 (30发)", code: "6IL892K013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "高伤害，上胸三枪一个" },
+  { name: "腾龙", sub: "突击容错 (30发)", code: "6IL87QG013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "无导气+30发，容错率高" },
+  { name: "AK-12", sub: "中距压制 (45发+三倍)", code: "6IL88AC013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "45发弹匣+三倍镜" },
+  { name: "M7", sub: "屏息稳压", code: "6IL89B4013CE082VBOHIS", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "屏息后座极低，精准打击" },
+  { name: "M7", sub: "不屏息手感", code: "6IL8A7O013CE082VBOHIS", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "不屏息也有好手感" },
+  { name: "AS Val", sub: "贴脸爆发 (45发+四连发)", code: "6IFUEKK013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "45发弹匣+四连发，贴脸秒杀" },
+  { name: "MP5", sub: "冲脸救人 (50发)", code: "6IL8BQK013CE082VBOHIS", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "50发弹匣，近距离救援神器" },
+  { name: "MK4", sub: "全自动容错 (48发)", code: "6IL8C78013CE082VBOHIS", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "48发全自动，容错率高" },
+  { name: "M249", sub: "架点核心", code: "6IL8QO4013CE082VBOHIS", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "架点扫射，压制火力" },
+  { name: "QJB201", sub: "125发火力压制", code: "6IL8DCS013CE082VBOHIS", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "125发大弹匣，持续输出" },
+  { name: "AUG", sub: "60发弹鼓压制", code: "6IL8TC8013CE082VBOHIS", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "60发弹鼓+稳定输出" },
+  { name: "SR-25", sub: "3/7倍镜中远收割", code: "6IL8TFS013CE082VBOHIS", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "3/7倍镜，中远程收割机" },
+  { name: "R93", sub: "一枪致命 (3/7倍镜)", code: "6IL8TJG013CE082VBOHIS", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "3/7倍镜，一枪毙命" },
+  { name: "MP7", sub: "全面战场配置", code: "6HB6614064DU5TFLJ691H", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "全面战场冲锋枪方案" },
+  { name: "M4A1", sub: "全面战场红点版", code: "6FC1NKK0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "全面战场红点配置" },
+  { name: "M4A1", sub: "全面战场倍镜版", code: "6FC1NT40C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "全面战场倍镜配置" },
+  { name: "SCAR-H", sub: "全面战场红点版", code: "6FC1J2G0C78LK1MQ84RUR", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "全面战场红点配置" },
+  { name: "SCAR-H", sub: "全面战场倍镜版", code: "6FC1JRO0C78LK1MQ84RUR", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "全面战场倍镜配置" },
+  { name: "M700", sub: "全面战场瞬狙版", code: "6FC1KVC0C78LK1MQ84RUR", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "全面战场瞬狙配置" },
+  { name: "S12K", sub: "全面战场高容错", code: "6FC1LV40C78LK1MQ84RUR", category: "霰弹枪", tab: "battlefield", cost: "满改", desc: "高容错率霰弹枪" },
+
+  // ═══════════════════════════════════════════
+  // ⭐ 主播同款
+  // ═══════════════════════════════════════════
+  { name: "M7", sub: "林树·战斗步枪", code: "6H52MG807ODLT6ETQT3GS", category: "战斗步枪", tab: "streamer", cost: "满改", desc: "🔥 林树同款 M7" },
+  { name: "M14", sub: "林树·射手步枪", code: "6KHGLG00BNSV43TFRAQ1K", category: "射手步枪", tab: "streamer", cost: "满改", desc: "🔥 林树同款 M14" },
+  { name: "M7", sub: "老飞宇 (92W)", code: "6H5ADQC05A947LDE85PAK", category: "战斗步枪", tab: "streamer", cost: "92万", desc: "⭐ 老飞宇同款 M7" },
+  { name: "AS Val", sub: "老飞宇 (58W)", code: "6HHOE5K0FFIB7A6U8GMU3", category: "突击步枪", tab: "streamer", cost: "58万", desc: "⭐ 老飞宇同款 AS Val" },
+  { name: "MP5", sub: "老飞宇 (17W/50发)", code: "6HLKSCC0FFIB7A6U8GMU3", category: "冲锋枪", tab: "streamer", cost: "17万", desc: "⭐ 老飞宇同款 MP5" },
+  { name: "K416", sub: "杨齐家 (74W双爆闪)", code: "6GQUTD40D9T4K2M106QN0", category: "突击步枪", tab: "streamer", cost: "74万", desc: "💎 杨齐家同款 K416" },
+  { name: "AS Val", sub: "杨齐家 (67W)", code: "6GNLPCK0CNCS5MQIPJEN8", category: "突击步枪", tab: "streamer", cost: "67万", desc: "💎 杨齐家同款 AS Val" },
+  { name: "MCX LT", sub: "杨齐家 (80W)", code: "6IUQ2CK0CCNN7V1KCQCD1", category: "突击步枪", tab: "streamer", cost: "80万", desc: "💎 杨齐家同款 MCX LT" },
+  { name: "AS Val", sub: "白泽同款", code: "6HABLBG0BSCDR38JE15T7", category: "突击步枪", tab: "streamer", cost: "满改", desc: "🌟 白泽同款 AS Val" },
+  { name: "SR-3M", sub: "南波万同款", code: "6H8MUR809VRBFP6UQGAT9", category: "冲锋枪", tab: "streamer", cost: "满改", desc: "🏆 南波万同款 SR-3M" },
+  { name: "AKM", sub: "安澜颗秒", code: "6ID785005JKOAP04RBN2K", category: "突击步枪", tab: "streamer", cost: "满改", desc: "💥 安澜同款 AKM 颗秒配置" },
+  { name: "M4", sub: "苏醒同款", code: "6RSGK80ENDUQQEFUGMED", category: "突击步枪", tab: "streamer", cost: "满改", desc: "🎯 苏醒同款 M4" },
+
+  // ═══════════════════════════════════════════
+  // 🎖️ 金枪客任务
+  // ═══════════════════════════════════════════
+  { name: "RM277", sub: "金枪客上交版", code: "6KFCTUS0C2C56U6BB8FNO", category: "突击步枪", tab: "gold", cost: "~17万", desc: "低成本达标，完成金枪客任务" },
+  { name: "SVCH", sub: "金枪客上交版", code: "6KFCU9S0C2C56U6BB8FNO", category: "射手步枪", tab: "gold", cost: "~25万", desc: "低成本达标，完成金枪客任务" },
+  { name: "ASh-12", sub: "金枪客上交版", code: "6KFCUEG0C2C56U6BB8FNO", category: "战斗步枪", tab: "gold", cost: "满改", desc: "金枪客任务专属" },
+  { name: "SVCH", sub: "满改红点推荐", code: "6KFCGHO08QMG6NRUK6UQC", category: "射手步枪", tab: "gold", cost: "满改", desc: "红点镜满改，精准打击" },
+  { name: "SVCH", sub: "金枪客性价比", code: "6KFCSOS08QMG6NRUK6UQC", category: "射手步枪", tab: "gold", cost: "中配", desc: "性价比之选" },
+  { name: "RM277", sub: "金枪客性价比", code: "6KFCQQ808QMG6NRUK6UQC", category: "突击步枪", tab: "gold", cost: "中配", desc: "性价比之选" },
+
+  // ═══════════════════════════════════════════
+  // 💰 KC17 方案
+  // ═══════════════════════════════════════════
+  { name: "KC17", sub: "青春版 (20W)", code: "6HAUJ7O0E5QUTQP36HK9K", category: "突击步枪", tab: "budget", cost: "20万", desc: "丐版入门" },
+  { name: "KC17", sub: "满改火控 (45W)", code: "6HAUJ8G0E5QUTQP36HK9K", category: "突击步枪", tab: "budget", cost: "45万", desc: "火控满改性价比" },
+  { name: "KC17", sub: "短管FFC顶配", code: "6KI9V3C0EU90O684D8QL5", category: "突击步枪", tab: "budget", cost: "~55万", desc: "短管FFC制退器顶配" },
+  { name: "KC17", sub: "长管FFC倍镜版", code: "6KIA01C0EU90O684D8QL5", category: "突击步枪", tab: "budget", cost: "~60万", desc: "长管+FFC+倍镜" },
+  { name: "KC17", sub: "长管密令沙暴倍镜版", code: "6KI9VQG0EU90O684D8QL5", category: "突击步枪", tab: "budget", cost: "~60万", desc: "长管密令沙暴补偿器+倍镜" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 紧凑步枪
+  // ═══════════════════════════════════════════
+  { name: "SR-3M", sub: "青春版 (13W)", code: "6HAUJ9O0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "13万", desc: "丐版入门紧凑步枪" },
+  { name: "SR-3M", sub: "半改 (30W)", code: "6HAUJA00E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "30万", desc: "中配半改" },
+  { name: "SR-3M", sub: "极致腰射 (46W)", code: "6G1JJPK0FIAS4OUQQ081T", category: "紧凑步枪", tab: "fenghuo", cost: "46万", desc: "极致腰射，近战短剑" },
+  { name: "SR-3M", sub: "满改腰射 (48W)", code: "6HAUJ9G0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "48万", desc: "满改腰射顶配" },
+  { name: "SR-3M", sub: "全能版 (63W)", code: "6HAUJ9S0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "63万", desc: "全能顶配" },
+  { name: "SR-3M", sub: "69W轮椅满改", code: "6H5LQRC0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "69万", desc: "轮椅配置，极致体验" },
+  { name: "AKS-74U", sub: "青春版 (9W)", code: "6HAUJ9G0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "9万", desc: "最丐紧凑步枪" },
+
+  { name: "MCX LT", sub: "30发版", code: "6HAUERC0E5QUTQP36HK9K", category: "紧凑步枪", tab: "fenghuo", cost: "满改", desc: "30发可改45弹匣，紧凑灵活" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 弓
+  // ═══════════════════════════════════════════
+  { name: "复合弓", sub: "满改竞赛版 (30W)", code: "6HAUOG80E5QUTQP36HK9K", category: "弓", tab: "fenghuo", cost: "30万", desc: "增强弓弦+竞赛箭台，潜行神器" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 近战特化（补充新码）
+  // ═══════════════════════════════════════════
+  { name: "P90", sub: "大改破点版 (28W)", code: "6H734BG0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "28万", desc: "大改破点流P90" },
+  { name: "QCQ171", sub: "半改破点版 (24W)", code: "6H734TS0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "24万", desc: "半改破点高性价比" },
+  { name: "MP7", sub: "半改全能版 (29W)", code: "6H7378K0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "29万", desc: "半改全能冲锋" },
+  { name: "Vector", sub: "大改全能版 (36W)", code: "6H7375G0B12QASUQB4J4K", category: "冲锋枪", tab: "fenghuo", cost: "36万", desc: "大改全能Vector" },
+  { name: "K437", sub: "近战大改全能 (29W)", code: "6H737QG0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "29万", desc: "近战大改全能版" },
+  { name: "ASh-12", sub: "近战贴脸版 (S10金枪客)", code: "6KFCUF00C2C56U6BB8FNO", category: "战斗步枪", tab: "fenghuo", cost: "满改", desc: "S10金枪客近战贴脸" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 性价比半改系列
+  // ═══════════════════════════════════════════
+  { name: "K416", sub: "半改性价比 (30W+)", code: "6H0P6BS04B3997JL52F1O", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改红点高性价比" },
+  { name: "K416", sub: "半改红点版 (35W)", code: "6HBOVD400L4AD1AGIEDEN", category: "突击步枪", tab: "fenghuo", cost: "35万", desc: "半改红点均衡配置" },
+  { name: "K416", sub: "满改性价比 (39W)", code: "6FV0SVS0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "39万", desc: "39W性价比满改" },
+  { name: "M7", sub: "半改性价比 (30W+)", code: "6H0P4C804B3997JL52F1O", category: "战斗步枪", tab: "fenghuo", cost: "30万", desc: "半改红点高性价比" },
+  { name: "M7", sub: "半改红点版 (35W)", code: "6HBOV7C00L4AD1AGIEDEN", category: "战斗步枪", tab: "fenghuo", cost: "35万", desc: "半改红点M7" },
+  { name: "M7", sub: "半改极限版 (48W)", code: "6FV7Q2K0B12QASUQB4J4K", category: "战斗步枪", tab: "fenghuo", cost: "48万", desc: "48W半改极限" },
+  { name: "AS Val", sub: "半改红点版 (30W)", code: "6HBOUM800L4AD1AGIEDEN", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改红点巨浪" },
+  { name: "AS Val", sub: "满改性价比 (36W)", code: "6FV0KUG0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "36万", desc: "36W性价比满改" },
+  { name: "SCAR-H", sub: "半改红点版 (30W)", code: "6HBOUP400L4AD1AGIEDEN", category: "战斗步枪", tab: "fenghuo", cost: "30万", desc: "半改红点SCAR" },
+  { name: "SCAR-H", sub: "半改性价比 (30W+)", code: "6H0PAHS04B3997JL52F1O", category: "战斗步枪", tab: "fenghuo", cost: "30万", desc: "半改高性价比" },
+  { name: "SCAR-H", sub: "满改性价比 (35W)", code: "6FV7P1S0B12QASUQB4J4K", category: "战斗步枪", tab: "fenghuo", cost: "35万", desc: "35W性价比满改" },
+  { name: "AKM", sub: "半改红点版 (30W)", code: "6HBOVFS00L4AD1AGIEDEN", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改红点AKM" },
+  { name: "AKM", sub: "半改性价比 (30W+)", code: "6H0P1EG04B3997JL52F1O", category: "突击步枪", tab: "fenghuo", cost: "30万", desc: "半改高性价比" },
+  { name: "AKM", sub: "满改性价比 (29W)", code: "6FV0MES0B12QASUQB4J4K", category: "突击步枪", tab: "fenghuo", cost: "29万", desc: "29W性价比满改AKM" },
+
+  // ═══════════════════════════════════════════
+  // 🔥 烽火地带 — 更多主播同款
+  // ═══════════════════════════════════════════
+  { name: "M14", sub: "昊天同款 (104W)", code: "6HDL6K80ENDUQ0EFJGCAD", category: "射手步枪", tab: "streamer", cost: "104万", desc: "🔥 昊天同款 M14 顶配" },
+  { name: "M14", sub: "白泽丐版 (20W+)", code: "6GQ0VK00FIAS4OUQQ081T", category: "射手步枪", tab: "streamer", cost: "20万", desc: "🌟 白泽丐版 M14" },
+  { name: "K416", sub: "白泽丐版 (20W+)", code: "6G197CK06TRF107Q8PIO9", category: "突击步枪", tab: "streamer", cost: "20万", desc: "🌟 白泽丐版 K416" },
+  { name: "K416", sub: "艺术同款 (72W)", code: "6HESIACOENDUQ0EFJGCAD", category: "突击步枪", tab: "streamer", cost: "72万", desc: "🎨 艺术同款 K416" },
+  { name: "K437", sub: "白泽版 (50W)", code: "6GPI5OS0EU90O684D8QL5", category: "突击步枪", tab: "streamer", cost: "50万", desc: "🌟 白泽版 K437" },
+  { name: "M7", sub: "杨齐家版 (70-90W)", code: "6HFNFBK071IV3H7JMK9SA", category: "战斗步枪", tab: "streamer", cost: "80万", desc: "💎 杨齐家版 M7" },
+  { name: "AS Val", sub: "白泽同款 (61W)", code: "6GNJSFC0FUH1E5MQ63E4O", category: "突击步枪", tab: "streamer", cost: "61万", desc: "🌟 白泽同款 AS Val" },
+  { name: "SR-3M", sub: "昊天版 (60W+)", code: "6G9RFLG0CPEOKJEAQ15OG", category: "冲锋枪", tab: "streamer", cost: "60万", desc: "🔥 昊天版 SR-3M" },
+  { name: "PSG-1", sub: "杨齐家版 (50W+)", code: "6GNC00O098SEBSSLM8QIU", category: "射手步枪", tab: "streamer", cost: "50万", desc: "💎 杨齐家版 PSG-1" },
+  { name: "SR-25", sub: "千岁同款 (69W)", code: "6HR7FR80817N6E2JL6NHN", category: "射手步枪", tab: "streamer", cost: "69万", desc: "👑 千岁同款 SR-25" },
+  { name: "QCQ171", sub: "杨齐家版 (20W+)", code: "6HIAIOO0F5FTUU9D1RAH1", category: "冲锋枪", tab: "streamer", cost: "20万", desc: "💎 杨齐家版 QCQ171" },
+  { name: "QCQ171", sub: "苏醒同款 (60W)", code: "6HILJDG0EOFGDIS4U8RJ2", category: "冲锋枪", tab: "streamer", cost: "60万", desc: "🎯 苏醒同款 QCQ171" },
+  { name: "MP7", sub: "林树版 (40W)", code: "6H3OFM806ALD54C0SAGB3", category: "冲锋枪", tab: "streamer", cost: "40万", desc: "🔥 林树版 MP7" },
+  { name: "P90", sub: "林树版 (40W+)", code: "6H1HI140B9I04M2JUJ0H8", category: "冲锋枪", tab: "streamer", cost: "40万", desc: "🔥 林树版 P90" },
+  { name: "SMG-45", sub: "林树版 (30W+)", code: "6H3OFG006ALD54C0SAGB3", category: "冲锋枪", tab: "streamer", cost: "30万", desc: "🔥 林树版 SMG-45" },
+  { name: "AWM", sub: "昊天版 (60W+)", code: "6GST9J007DCDFFGQKKTVD", category: "狙击步枪", tab: "streamer", cost: "60万", desc: "🔥 昊天版 AWM" },
+  { name: "M250", sub: "白泽版 (50W+)", code: "6FQ0P8C02VPC8AV68TM66", category: "轻机枪", tab: "streamer", cost: "50万", desc: "🌟 白泽版 M250" },
+  { name: "PKM", sub: "白泽版 (40W+)", code: "6GRGCDS07GMVM2B973KSJ", category: "轻机枪", tab: "streamer", cost: "40万", desc: "🌟 白泽版 PKM" },
+  { name: "Vector", sub: "白泽版 (30W+)", code: "6FC8M2O0E5E2193149FR0", category: "冲锋枪", tab: "streamer", cost: "30万", desc: "🌟 白泽版 Vector" },
+
+  // ═══════════════════════════════════════════
+  // ⚔️ 全面战场 — 突击步枪 补充
+  // ═══════════════════════════════════════════
+  { name: "K416", sub: "全面战场满配60发", code: "6EIALPC02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "60发弹匣满配" },
+  { name: "K416", sub: "全面战场通用版", code: "6G46HDO003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用配置" },
+  { name: "M4A1", sub: "全面战场45发弹匣", code: "6EIAL7C02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "45发弹匣战场版" },
+  { name: "M4A1", sub: "全面战场通用版", code: "6G46HAK003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用M4A1" },
+  { name: "AKM", sub: "全面战场版", code: "6EIAL2G02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场AKM配置" },
+  { name: "AKM", sub: "全面战场红点版", code: "6FC1THO0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场红点AKM" },
+  { name: "AKM", sub: "全面战场通用版", code: "6GBKIS4003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用AKM" },
+  { name: "腾龙", sub: "全面战场红点版", code: "6FC1S5K0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场红点腾龙" },
+  { name: "腾龙", sub: "全面战场短管版", code: "6JBKENG00SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "短管战场腾龙" },
+  { name: "腾龙", sub: "全面战场消音版", code: "6GH2UEKOACJLENNDR871G", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "消音战场腾龙" },
+  { name: "AS Val", sub: "全面战场可腰射", code: "6FC1LEC0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "腰射战场巨浪" },
+  { name: "AS Val", sub: "全面战场版", code: "6EIAKVC02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场巨浪配置" },
+  { name: "AS Val", sub: "全面战场通用版", code: "6GBKJV0003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用巨浪" },
+  { name: "SCAR-H", sub: "全面战场版", code: "6EIAUAK02U9HU6AC38CQJ", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "战场SCAR配置" },
+  { name: "SCAR-H", sub: "全面战场通用版", code: "6FF4DCK003VFRI96M4LF5", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "战场通用SCAR" },
+  { name: "AUG", sub: "全面战场短管版", code: "6JBKG1K00SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "短管战场AUG" },
+  { name: "AUG", sub: "全面战场通用版", code: "6FJ249G003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用AUG" },
+  { name: "CAR-15", sub: "全面战场版", code: "6FC1LGS0C78LK1MQ84RUR", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场CAR-15配置" },
+  { name: "CAR-15", sub: "全面战场通用版", code: "6G46H18003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用CAR-15" },
+  { name: "PTR-32", sub: "全面战场版", code: "6EIAKTC02U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场PTR-32配置" },
+  { name: "PTR-32", sub: "全面战场30发版", code: "6JBKF4000SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "30发战场PTR-32" },
+  { name: "PTR-32", sub: "全面战场40发版", code: "6JBKFBG00SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "40发战场PTR-32" },
+  { name: "PTR-32", sub: "全面战场通用版", code: "6GGD29C003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用PTR-32" },
+  { name: "M7", sub: "全面战场版", code: "6EIATGS02U9HU6AC38CQJ", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "战场M7配置" },
+  { name: "M7", sub: "全面战场通用版", code: "6FRGRM4003VFRI96M4LF5", category: "战斗步枪", tab: "battlefield", cost: "满改", desc: "战场通用M7" },
+  { name: "MK47", sub: "全面战场版", code: "6JBKFP800SN1EFGFC1PR0", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场MK47配置" },
+  { name: "SG552", sub: "全面战场消音版", code: "6GL1JG80ACJLENNDR871G", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "消音战场SG552" },
+  { name: "SG552", sub: "全面战场通用版", code: "6FRGROK003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用SG552" },
+  { name: "K437", sub: "全面战场通用版", code: "6GOJH10003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用K437" },
+  { name: "QBZ95-1", sub: "全面战场通用版", code: "6G1DQJ0003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用95式" },
+  { name: "AK-12", sub: "全面战场通用版", code: "6FUTEG4003VFRI96M4LF5", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场通用AK-12" },
+  { name: "191式", sub: "全面战场版", code: "6EIAL5002U9HU6AC38CQJ", category: "突击步枪", tab: "battlefield", cost: "满改", desc: "战场191式配置" },
+
+  // ═══════════════════════════════════════════
+  // ⚔️ 全面战场 — 冲锋枪 补充
+  // ═══════════════════════════════════════════
+  { name: "UZI", sub: "全面战场版", code: "6EIALBS02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场UZI配置" },
+  { name: "UZI", sub: "全面战场可腰射", code: "6FC1QN40C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "腰射战场UZI" },
+  { name: "MP7", sub: "全面战场满改", code: "6EIAOLG02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场满改MP7" },
+  { name: "野牛", sub: "全面战场版", code: "6EIANV002U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场野牛配置" },
+  { name: "野牛", sub: "全面战场通用版", code: "6G1DP9G003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用野牛" },
+  { name: "SMG-45", sub: "全面战场版", code: "6EIAN5K02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场SMG-45配置" },
+  { name: "SMG-45", sub: "全面战场腰射100", code: "6FC1Q900C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "100腰射战场SMG-45" },
+  { name: "SMG-45", sub: "全面战场通用版", code: "6GBKJ48003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用SMG-45" },
+  { name: "SR-3M", sub: "全面战场版", code: "6EIAQ5O02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场SR-3M配置" },
+  { name: "SR-3M", sub: "全面战场腰射100", code: "6FC1LQG0C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "100腰射战场SR-3M" },
+  { name: "SR-3M", sub: "全面战场通用版", code: "6G46HM0003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用SR-3M" },
+  { name: "MP5", sub: "全面战场版", code: "6EIAQQO02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场MP5配置" },
+  { name: "MP5", sub: "全面战场通用版", code: "6GBKJ28003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用MP5" },
+  { name: "Vector", sub: "全面战场版", code: "6EIAREK02U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场Vector配置" },
+  { name: "Vector", sub: "全面战场可腰射", code: "6FC1LMC0C78LK1MQ84RUR", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "腰射战场Vector" },
+  { name: "Vector", sub: "全面战场通用版", code: "6GBKJ7K003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用Vector" },
+  { name: "勇士", sub: "全面战场版", code: "6EIAPD802U9HU6AC38CQJ", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场勇士配置" },
+  { name: "P90", sub: "全面战场通用版", code: "6G46HN0003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用P90" },
+  { name: "QCQ171", sub: "全面战场通用版", code: "6FRGRH4003VFRI96M4LF5", category: "冲锋枪", tab: "battlefield", cost: "满改", desc: "战场通用QCQ171" },
+
+  // ═══════════════════════════════════════════
+  // ⚔️ 全面战场 — 射手步枪 / 狙击 / 机枪 补充
+  // ═══════════════════════════════════════════
+  { name: "M14", sub: "全面战场50发版", code: "6JBKMQ400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "50发战场M14" },
+  { name: "M14", sub: "全面战场30发版", code: "6J82PLC00SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "30发战场M14" },
+  { name: "M14", sub: "全面战场通用版", code: "6EIBB2C02U9HU6AC38CQJ", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "战场通用M14" },
+  { name: "SR-25", sub: "全面战场架点版", code: "6JBKHK400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "架点战场SR-25" },
+  { name: "SR-25", sub: "全面战场冲锋版", code: "6JBKHLS00SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "冲锋战场SR-25" },
+  { name: "SR-25", sub: "全面战场版", code: "6EIBCOC02U9HU6AC38CQJ", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "战场SR-25配置" },
+  { name: "Mini-14", sub: "全面战场版", code: "6EIBDN802U9HU6AC38CQJ", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "战场Mini-14配置" },
+  { name: "Mini-14", sub: "全面战场游击操速版", code: "6FC1UQ80C78LK1MQ84RUR", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "游击操速Mini-14" },
+  { name: "PSG-1", sub: "全面战场版", code: "6EIBEK802U9HU6AC38CQJ", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "战场PSG-1配置" },
+  { name: "R93", sub: "全面战场版", code: "6JBKH5400SN1EFGFC1PR0", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "战场R93配置" },
+  { name: "AWM", sub: "全面战场版", code: "6G4615C003VFRI96M4LF5", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "战场AWM配置" },
+  { name: "M700", sub: "全面战场通用版", code: "6G46140003VFRI96M4LF5", category: "狙击步枪", tab: "battlefield", cost: "满改", desc: "战场通用M700" },
+  { name: "M249", sub: "全面战场腰射版", code: "6JBKGGC00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "腰射战场M249" },
+  { name: "M249", sub: "全面战场常规版", code: "6JBKGLO00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "常规战场M249" },
+  { name: "M249", sub: "全面战场版", code: "6EIAV5802U9HU6AC38CQJ", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "战场M249配置" },
+  { name: "PKM", sub: "全面战场版", code: "6EIAVVS02U9HU6AC38CQJ", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "战场PKM配置" },
+  { name: "PKM", sub: "全面战场火控架枪版", code: "6FC1VLS0C78LK1MQ84RUR", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "火控架枪战场PKM" },
+  { name: "M250", sub: "全面战场冲锋版", code: "6JBMU6000SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "冲锋战场M250" },
+  { name: "M250", sub: "全面战场0操作架点", code: "6JBT8DK00SN1EFGFC1PR0", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "0操作架点M250" },
+  { name: "M250", sub: "全面战场版", code: "6EH17F402U9HU6AC38CQJ", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "战场M250配置" },
+  { name: "M250", sub: "全面战场通用版", code: "6F12AR4003VFR196M4LF5", category: "轻机枪", tab: "battlefield", cost: "满改", desc: "战场通用M250" },
+
+  // ═══════════════════════════════════════════
+  // ⚔️ 全面战场 — 其他
+  // ═══════════════════════════════════════════
+  { name: "S12K", sub: "全面战场版", code: "6EIAL9C02U9HU6AC38CQJ", category: "霰弹枪", tab: "battlefield", cost: "满改", desc: "战场S12K配置" },
+  { name: "G18", sub: "全面战场版", code: "6FC1P800C78LK1MQ84RUR", category: "手枪", tab: "battlefield", cost: "满改", desc: "战场G18配置" },
+  { name: "杠杆式步枪", sub: "全面战场腰射版", code: "6JBKIE400SN1EFGFC1PR0", category: "射手步枪", tab: "battlefield", cost: "满改", desc: "腰射杠杆式步枪" },
+
+  // ═══════════════════════════════════════════
+  // 📦 综合补充
+  // ═══════════════════════════════════════════
+  { name: "M14", sub: "M14通用版", code: "6G46104003VFRI96M4LF5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "战场/烽火通用M14" },
+  { name: "SR-25", sub: "SR-25通用版", code: "6G4628003VFRI96M4LF5", category: "射手步枪", tab: "fenghuo", cost: "满改", desc: "战场/烽火通用SR-25" },
+  { name: "G3", sub: "杨齐家同款丐版 (22W)", code: "6GI1TIS0D06PJ9BGGJFPR", category: "战斗步枪", tab: "fenghuo", cost: "22万", desc: "杨齐家同款丐版G3" },
+];
+
+// ─── User-added codes (persisted in localStorage) ───
+let userGuns = [];
+try {
+  const saved = localStorage.getItem('delta_gun_userdata');
+  if (saved) { userGuns = JSON.parse(saved); }
+} catch(e) {}
+
+function saveUserGuns() {
+  try { localStorage.setItem('delta_gun_userdata', JSON.stringify(userGuns)); } catch(e) {}
+}
+
+// Merge built-in + user codes, attach price
+function allGuns() {
+  return [...guns, ...userGuns];
+}
+
+// Attach numeric price to built-in once
+guns.forEach(g => { g._price = parsePrice(g.cost); });
+
+// ─── Modal logic ───
+let editingCode = null; // non-null = editing a user code
+
+function openAddModal() {
+  editingCode = null;
+  document.getElementById('modalTitle').textContent = '➕ 添加改枪方案';
+  document.getElementById('modalName').value = '';
+  document.getElementById('modalSub').value = '';
+  document.getElementById('modalCode').value = '';
+  document.getElementById('modalCategory').value = '突击步枪';
+  document.getElementById('modalTab').value = 'fenghuo';
+  document.getElementById('modalCost').value = '';
+  document.getElementById('modalDesc').value = '';
+  document.getElementById('modalSave').textContent = '💾 保存';
+  document.getElementById('modalOverlay').classList.add('show');
+  document.getElementById('modalName').focus();
+}
+
+function openEditModal(code) {
+  const gun = userGuns.find(g => g.code === code);
+  if (!gun) return;
+  editingCode = code;
+  document.getElementById('modalTitle').textContent = '✏️ 编辑改枪方案';
+  document.getElementById('modalName').value = gun.name;
+  document.getElementById('modalSub').value = gun.sub;
+  document.getElementById('modalCode').value = gun.code;
+  document.getElementById('modalCategory').value = gun.category;
+  document.getElementById('modalTab').value = gun.tab;
+  document.getElementById('modalCost').value = gun.cost;
+  document.getElementById('modalDesc').value = gun.desc;
+  document.getElementById('modalSave').textContent = '💾 更新';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+  editingCode = null;
+}
+
+function saveModal() {
+  const name = document.getElementById('modalName').value.trim();
+  const sub = document.getElementById('modalSub').value.trim();
+  const code = document.getElementById('modalCode').value.trim();
+  const category = document.getElementById('modalCategory').value;
+  const tab = document.getElementById('modalTab').value;
+  const cost = document.getElementById('modalCost').value.trim() || '满改';
+  const desc = document.getElementById('modalDesc').value.trim() || '自定义方案';
+
+  if (!name || !sub || !code) {
+    showToast('⚠ 枪械名称、方案名称和改枪码不能为空');
+    return;
+  }
+
+  if (editingCode) {
+    // Edit existing
+    const idx = userGuns.findIndex(g => g.code === editingCode);
+    if (idx >= 0) {
+      userGuns[idx] = { name, sub, code, category, tab, cost, desc, _price: parsePrice(cost) };
+    }
+  } else {
+    // Check duplicate code
+    if (userGuns.some(g => g.code === code) || guns.some(g => g.code === code)) {
+      showToast('⚠ 该改枪码已存在，请检查');
+      return;
+    }
+    userGuns.push({ name, sub, code, category, tab, cost, desc, _price: parsePrice(cost) });
+  }
+
+  saveUserGuns();
+  closeModal();
+  showToast(editingCode ? '✅ 方案已更新！' : '✅ 新方案已添加！');
+  render();
+}
+
+function deleteUserGun(code) {
+  if (!confirm('确定删除这个方案吗？此操作不可恢复。')) return;
+  userGuns = userGuns.filter(g => g.code !== code);
+  if (expiredCodes.has(code)) expiredCodes.delete(code);
+  saveUserGuns();
+  saveExpired();
+  render();
+  showToast('🗑 方案已删除');
+}
+
+// ─── Init: attach price to user guns ───
+userGuns.forEach(g => { g._price = parsePrice(g.cost); });
+
+// ─── Expired codes (persisted in localStorage) ───
+let expiredCodes = new Set();
+try {
+  const saved = localStorage.getItem('delta_gun_expired');
+  if (saved) { expiredCodes = new Set(JSON.parse(saved)); }
+} catch(e) {}
+
+function saveExpired() {
+  try { localStorage.setItem('delta_gun_expired', JSON.stringify([...expiredCodes])); } catch(e) {}
+}
+
+function toggleExpired(code) {
+  if (expiredCodes.has(code)) {
+    expiredCodes.delete(code);
+  } else {
+    expiredCodes.add(code);
+  }
+  saveExpired();
+  render();
+}
+
+// ─── State ───
+let activeTab = 'all';
+let searchQuery = '';
+let categoryFilter = 'all';
+let priceFilter = 'all';
+let sortBy = 'default';
+let currentPage = 1;
+let pageSize = 12;
+let hideExpired = false;
+
+// ─── Render ───
+function render() {
+  // Step 1: merge built-in + user codes
+  const merged = allGuns();
+
+  // Step 2: filter
+  let filtered = merged.filter(g => {
+    if (activeTab !== 'all' && g.tab !== activeTab) return false;
+    if (categoryFilter !== 'all' && g.category !== categoryFilter) return false;
+    if (priceFilter !== 'all') {
+      const p = g._price;
+      if (priceFilter === 'budget' && p >= 200000) return false;
+      if (priceFilter === 'mid' && (p < 200000 || p >= 500000)) return false;
+      if (priceFilter === 'high' && (p < 500000 || p >= 900000)) return false;
+      if (priceFilter === 'maxed' && p < 900000) return false;
+    }
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      if (!g.name.toLowerCase().includes(q) && !g.sub.toLowerCase().includes(q) && !g.desc.toLowerCase().includes(q) && !g.code.toLowerCase().includes(q)) {
+        return false;
+      }
+    }
+    if (hideExpired && expiredCodes.has(g.code)) return false;
+    return true;
+  });
+
+  // Step 3: sort
+  if (sortBy === 'price-asc') {
+    filtered.sort((a, b) => a._price - b._price || a.name.localeCompare(b.name));
+  } else if (sortBy === 'price-desc') {
+    filtered.sort((a, b) => b._price - a._price || a.name.localeCompare(b.name));
+  } else if (sortBy === 'name-asc') {
+    filtered.sort((a, b) => a.name.localeCompare(b.name) || a._price - b._price);
+  } else if (sortBy === 'name-desc') {
+    filtered.sort((a, b) => b.name.localeCompare(a.name) || a._price - b._price);
+  }
+
+  // Step 4: paginate
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * pageSize;
+  const paged = filtered.slice(start, start + pageSize);
+
+  // Step 5: render grid
+  const grid = document.getElementById('gunGrid');
+  const empty = document.getElementById('emptyState');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    grid.innerHTML = paged.map((g, i) => {
+      const tagClass = getTagClass(g.category);
+      const isExpired = expiredCodes.has(g.code);
+      const isUser = userGuns.some(ug => ug.code === g.code);
+      return `
+        <div class="gun-card ${isExpired ? 'expired' : ''}" style="animation: fadeIn 0.3s ${Math.min(i * 0.02, 0.8)}s both;">
+          <span class="expired-badge">⚠ 已过期</span>
+          <div class="card-header">
+            <div class="gun-name">
+              ${g.name}${isUser ? '<span class="user-badge">我的</span>' : ''}
+              <small>${g.sub}</small>
+            </div>
+            <div class="gun-tags">
+              <span class="tag ${tagClass}">${g.category}</span>
+            </div>
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">${g.desc}</p>
+          <div class="code-box">
+            <code class="code-text">${g.code}</code>
+            <button class="copy-btn" onclick="copyCode('${g.code.replace(/'/g, "\\'")}', this)" title="点击复制改枪码">📋 复制</button>
+          </div>
+          <div class="card-meta">
+            <span>💰 ${g.cost}</span>
+            <span>🏷️ ${getTabLabel(g.tab)}</span>
+            <button class="report-btn" onclick="toggleExpired('${g.code.replace(/'/g, "\\'")}'); event.stopPropagation();" title="${isExpired ? '标记为未过期' : '标记为已过期'}">${isExpired ? '🔄 恢复' : '⚠ 过期'}</button>
+            ${isUser ? `<button class="edit-btn" onclick="openEditModal('${g.code.replace(/'/g, "\\'")}'); event.stopPropagation();" title="编辑">✏️</button><button class="del-btn" onclick="deleteUserGun('${g.code.replace(/'/g, "\\'")}'); event.stopPropagation();" title="删除">🗑</button>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Step 6: update filters UI first (creates resultCount element), then set counts
+  updateActiveFilters();
+  document.getElementById('resultCount').textContent = filtered.length;
+  document.getElementById('totalGuns').textContent = merged.length;
+  document.getElementById('totalCategories').textContent = countCategories();
+  document.getElementById('pageInfo').textContent = `第 ${currentPage} 页，共 ${totalPages} 页`;
+  renderPageButtons(totalPages);
+
+  // Show/hide pagination bar
+  document.getElementById('paginationBar').style.display = filtered.length === 0 ? 'none' : 'flex';
+}
+
+// ─── Pagination buttons ───
+function renderPageButtons(totalPages) {
+  const container = document.getElementById('pageBtns');
+  let html = '';
+
+  html += `<button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}>◀ 上一页</button>`;
+
+  const pages = [];
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    if (currentPage > 3) pages.push('...');
+    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+      pages.push(i);
+    }
+    if (currentPage < totalPages - 2) pages.push('...');
+    pages.push(totalPages);
+  }
+
+  pages.forEach(p => {
+    if (p === '...') {
+      html += '<span class="page-ellipsis">…</span>';
+    } else {
+      html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`;
+    }
+  });
+
+  html += `<button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}>下一页 ▶</button>`;
+
+  container.innerHTML = html;
+}
+
+function goPage(page) {
+  const merged = allGuns();
+  const totalPages = Math.max(1, Math.ceil(
+    merged.filter(g => {
+      if (activeTab !== 'all' && g.tab !== activeTab) return false;
+      if (categoryFilter !== 'all' && g.category !== categoryFilter) return false;
+      if (priceFilter !== 'all') {
+        const p = g._price;
+        if (priceFilter === 'budget' && p >= 200000) return false;
+        if (priceFilter === 'mid' && (p < 200000 || p >= 500000)) return false;
+        if (priceFilter === 'high' && (p < 500000 || p >= 900000)) return false;
+        if (priceFilter === 'maxed' && p < 900000) return false;
+      }
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        if (!g.name.toLowerCase().includes(q) && !g.sub.toLowerCase().includes(q) && !g.desc.toLowerCase().includes(q) && !g.code.toLowerCase().includes(q)) return false;
+      }
+      return true;
+    }).length
+  ) / pageSize);
+
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  render();
+  document.getElementById('gunGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── Active filter chips ───
+function updateActiveFilters() {
+  const container = document.getElementById('activeFilters');
+  let chips = '';
+
+  if (activeTab !== 'all') {
+    chips += `<span class="filter-chip">${getTabLabel(activeTab)} <span class="remove" data-clear="tab">×</span></span>`;
+  }
+  if (categoryFilter !== 'all') {
+    chips += `<span class="filter-chip">${categoryFilter} <span class="remove" data-clear="category">×</span></span>`;
+  }
+  if (priceFilter !== 'all') {
+    const labels = { budget: '经济型 <20万', mid: '中配 20~50万', high: '高配 50~80万', maxed: '满改/顶配' };
+    chips += `<span class="filter-chip">${labels[priceFilter] || priceFilter} <span class="remove" data-clear="price">×</span></span>`;
+  }
+  if (searchQuery) {
+    chips += `<span class="filter-chip">🔍 "${searchQuery}" <span class="remove" data-clear="search">×</span></span>`;
+  }
+
+  container.innerHTML = chips + `<span class="result-count" id="resultCountWrapper">共 <strong id="resultCount">0</strong> 个方案</span>`;
+
+  // Click-to-remove listeners
+  container.querySelectorAll('.remove').forEach(el => {
+    el.addEventListener('click', () => {
+      const clear = el.dataset.clear;
+      if (clear === 'tab') { setActiveTab('all'); }
+      else if (clear === 'category') {
+        document.getElementById('categoryFilter').value = 'all';
+        categoryFilter = 'all';
+      }
+      else if (clear === 'price') {
+        document.getElementById('priceFilter').value = 'all';
+        priceFilter = 'all';
+      }
+      else if (clear === 'search') {
+        document.getElementById('searchInput').value = '';
+        searchQuery = '';
+      }
+      currentPage = 1;
+      render();
+    });
+  });
+
+  // Re-update result count after chips HTML is set
+  const countEl = document.getElementById('resultCount');
+  if (countEl) {
+    // count is set in render() before updateActiveFilters, so we re-read from grid
+  }
+}
+
+function setActiveTab(tabName) {
+  activeTab = tabName;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const target = document.querySelector(`.tab[data-tab="${tabName}"]`);
+  if (target) target.classList.add('active');
+}
+
+// ─── Helpers ───
+function getTagClass(cat) {
+  const map = {
+    '突击步枪': 'tag-ar',
+    '冲锋枪': 'tag-smg',
+    '射手步枪': 'tag-dmr',
+    '狙击步枪': 'tag-sniper',
+    '轻机枪': 'tag-lmg',
+    '战斗步枪': 'tag-br',
+    '紧凑步枪': 'tag-smg',
+    '霰弹枪': 'tag-shotgun',
+    '手枪': 'tag-ar',
+    '弓': 'tag-dmr',
+  };
+  return map[cat] || 'tag-ar';
+}
+
+function getTabLabel(tab) {
+  const map = {
+    'fenghuo': '🔥 烽火地带',
+    'battlefield': '⚔️ 全面战场',
+    'streamer': '⭐ 主播同款',
+    'gold': '🎖️ 金枪客',
+    'budget': '💰 KC17',
+    'all': '综合',
+  };
+  return map[tab] || tab;
+}
+
+// ─── Get unique category count ───
+function countCategories() {
+  const cats = new Set(allGuns().map(g => g.category));
+  return cats.size;
+}
+
+// ─── Copy ───
+function copyCode(code, btn) {
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = '✅ 已复制';
+    btn.classList.add('copied');
+    showToast('✅ 改枪码已复制到剪贴板！可直接在游戏中导入');
+    setTimeout(() => {
+      btn.textContent = '📋 复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✅ 已复制';
+    btn.classList.add('copied');
+    showToast('✅ 改枪码已复制到剪贴板！');
+    setTimeout(() => {
+      btn.textContent = '📋 复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ─── Toast ───
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ─── Event Listeners ───
+document.getElementById('tabs').addEventListener('click', e => {
+  const tab = e.target.closest('.tab');
+  if (!tab) return;
+  setActiveTab(tab.dataset.tab);
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQuery = e.target.value.trim();
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('categoryFilter').addEventListener('change', e => {
+  categoryFilter = e.target.value;
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('priceFilter').addEventListener('change', e => {
+  priceFilter = e.target.value;
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('sortBy').addEventListener('change', e => {
+  sortBy = e.target.value;
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('pageSizeSelect').addEventListener('change', e => {
+  pageSize = parseInt(e.target.value);
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('toggleExpiredBtn').addEventListener('click', function() {
+  hideExpired = !hideExpired;
+  this.classList.toggle('active', hideExpired);
+  this.innerHTML = hideExpired ? '⏳ 显示全部' : '⏳ 隐藏过期';
+  currentPage = 1;
+  render();
+});
+
+document.getElementById('addBtn').addEventListener('click', openAddModal);
+document.getElementById('modalCancel').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.getElementById('modalSave').addEventListener('click', saveModal);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  setActiveTab('all');
+  searchQuery = '';
+  categoryFilter = 'all';
+  priceFilter = 'all';
+  sortBy = 'default';
+  currentPage = 1;
+  pageSize = 12;
+  hideExpired = false;
+  document.getElementById('searchInput').value = '';
+  document.getElementById('categoryFilter').value = 'all';
+  document.getElementById('priceFilter').value = 'all';
+  document.getElementById('sortBy').value = 'default';
+  document.getElementById('pageSizeSelect').value = '12';
+  const btn = document.getElementById('toggleExpiredBtn');
+  btn.classList.remove('active');
+  btn.innerHTML = '⏳ 隐藏过期';
+  render();
+});
+
+// ─── Keyboard shortcuts ───
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+    e.preventDefault();
+    document.getElementById('resetBtn').click();
+  }
+});
+
+// ─── Init ───
+document.getElementById('totalCategories').textContent = countCategories();
+render();
+
+// ─── Animation ───
+const styleEl = document.createElement('style');
+styleEl.textContent = `
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+`;
+document.head.appendChild(styleEl);
+</script>
+
+</body>
+</html>
